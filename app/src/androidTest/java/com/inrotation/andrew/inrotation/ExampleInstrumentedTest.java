@@ -23,4 +23,5 @@ public class ExampleInstrumentedTest {
 
         assertEquals("com.inrotation.andrew.inrotation", appContext.getPackageName());
     }
+
 }
