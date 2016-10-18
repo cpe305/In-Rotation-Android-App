@@ -7,6 +7,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
@@ -37,6 +39,16 @@ public class MainActivity extends Activity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        final Button authenticateButton = (Button) findViewById(R.id.spotifyAuthenticateButton);
+        authenticateButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                onAuthenticateClick();
+            }
+        });
+    }
+
+    protected void onAuthenticateClick() {
         AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,
                 AuthenticationResponse.Type.TOKEN,
                 REDIRECT_URI);
@@ -98,13 +110,22 @@ public class MainActivity extends Activity implements
                 break;
         }
     }
-
+/*
     @Override
     public void onLoggedIn() {
         Log.d("MainActivity", "User logged in");
 
-        mPlayer.playUri(null, "spotify:track:2TpxZ7JUBn3uw46aR7qd6V", 0, 0);
+        mPlayer.playUri(null, "spotify:track:5FX89IUKm9QJT9ymrmyK4k", 0, 0);
     }
+*/
+
+    @Override
+    public void onLoggedIn() {
+        Log.d("MainActivity", "User logged in");
+        Intent intent = new Intent(this, HomeScreenActivity.class);
+        startActivity(intent);
+    }
+
 
     @Override
     public void onLoggedOut() {

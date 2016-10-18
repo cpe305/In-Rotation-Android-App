@@ -23,10 +23,15 @@ repositories {
     flatDir {
         dirs 'libs'
     }
+    mavenCentral()
+    maven { url "https://jitpack.io" }
 }
 
 
 dependencies {
+    compile 'com.github.kaaes:spotify-web-api-android:0.4.1'
+
+
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
     // This library handles authentication and authorization
