@@ -22,11 +22,12 @@
         android:text="Authenticate with Spotify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
         android:id="@+id/spotifyAuthenticateButton"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
         android:textAllCaps="false"
         android:elevation="0dp"
-        android:visibility="visible" />
+        android:visibility="visible"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:textSize="24sp" />
 </RelativeLayout>

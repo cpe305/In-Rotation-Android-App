@@ -31,6 +31,7 @@ public class MainActivity extends Activity implements
     private static final String REDIRECT_URI = "in-rotation://callback";
 
     private Player mPlayer;
+    private String resAccessToken;
 
     private static final int REQUEST_CODE = 1337;
 
@@ -63,9 +64,16 @@ public class MainActivity extends Activity implements
         super.onActivityResult(requestCode, resultCode, intent);
 
         // Check if result comes from the correct activity
-        if (requestCode == REQUEST_CODE) {
+       if (requestCode == REQUEST_CODE) {
             AuthenticationResponse response = AuthenticationClient.getResponse(resultCode, intent);
             if (response.getType() == AuthenticationResponse.Type.TOKEN) {
+                Intent homeIntent = new Intent(this, HomeScreenActivity.class);
+                resAccessToken = response.getAccessToken();
+                Log.d("MainActivity", resAccessToken);
+                homeIntent.putExtra("resAccessToken", resAccessToken);
+                startActivity(homeIntent);
+            }
+/*
                 Config playerConfig = new Config(this, response.getAccessToken(), CLIENT_ID);
                 Spotify.getPlayer(playerConfig, this, new SpotifyPlayer.InitializationObserver() {
                     @Override
@@ -80,8 +88,8 @@ public class MainActivity extends Activity implements
                         Log.e("MainActivity", "Could not initialize player: " + throwable.getMessage());
                     }
                 });
-            }
-        }
+            }*/
+       }
 
     }
 
@@ -118,12 +126,13 @@ public class MainActivity extends Activity implements
         mPlayer.playUri(null, "spotify:track:5FX89IUKm9QJT9ymrmyK4k", 0, 0);
     }
 */
-
     @Override
     public void onLoggedIn() {
         Log.d("MainActivity", "User logged in");
-        Intent intent = new Intent(this, HomeScreenActivity.class);
-        startActivity(intent);
+
+        mPlayer.playUri(null, "spotify:track:3gATNBVu8d7oWs9WijPDjD", 0, 0);
+
+
     }
 
 
