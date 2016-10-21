@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
@@ -42,11 +43,32 @@ public class MainActivity extends Activity implements
 
 
         final Button authenticateButton = (Button) findViewById(R.id.spotifyAuthenticateButton);
+
+        // -- Test HTTP Req
+        final Button httpReqButton = (Button) findViewById(R.id.httptest);
+        final TextView httpResponse = (TextView) findViewById(R.id.responsetest);
+
+        httpReqButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                testHTTP(httpResponse);
+            }
+        });
+
         authenticateButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 onAuthenticateClick();
             }
         });
+    }
+
+    protected void testHTTP(TextView responseView) {
+        HttpTransactionTest http = new HttpTransactionTest(responseView);
+        try {
+            responseView.setText(http.getQuote());
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
+
     }
 
     protected void onAuthenticateClick() {
@@ -75,8 +97,7 @@ public class MainActivity extends Activity implements
             }
 /*
                 Config playerConfig = new Config(this, response.getAccessToken(), CLIENT_ID);
-                Spotify.getPlayer(playerConfig, this, new SpotifyPlayer.InitializationObserver() {
-                    @Override
+                Spotify.getPlayer(playerConfig, this, new SpotifyPlayer.InitializationObserver() {                    @Override
                     public void onInitialized(SpotifyPlayer spotifyPlayer) {
                         mPlayer = spotifyPlayer;
                         mPlayer.addConnectionStateCallback(MainActivity.this);

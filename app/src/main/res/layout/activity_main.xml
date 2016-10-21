@@ -25,9 +25,36 @@
         android:id="@+id/spotifyAuthenticateButton"
         android:textAllCaps="false"
         android:elevation="0dp"
+<<<<<<< HEAD
         android:visibility="visible"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"
         android:textSize="24sp" />
+=======
+        android:visibility="visible" />
+
+    <Button
+        android:text="HTTP TEST"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/httptest"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="147dp" />
+
+    <TextView
+        android:text="Response"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/responsetest"
+        android:layout_alignTop="@+id/httptest"
+        android:layout_marginTop="76dp"
+        android:textSize="14sp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+>>>>>>> origin/master
 </RelativeLayout>
