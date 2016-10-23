@@ -30,4 +30,15 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="135dp"
         android:id="@+id/albumCoverView" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/albumCoverView"
+        android:layout_alignLeft="@+id/albumCoverView"
+        android:layout_alignStart="@+id/albumCoverView"
+        android:layout_marginTop="25dp"
+        android:id="@+id/songNameView" />
+
 </RelativeLayout>

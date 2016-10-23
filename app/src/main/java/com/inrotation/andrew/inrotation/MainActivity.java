@@ -44,16 +44,6 @@ public class MainActivity extends Activity implements
 
         final Button authenticateButton = (Button) findViewById(R.id.spotifyAuthenticateButton);
 
-        // -- Test HTTP Req
-        final Button httpReqButton = (Button) findViewById(R.id.httptest);
-        final TextView httpResponse = (TextView) findViewById(R.id.responsetest);
-
-        httpReqButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                testHTTP(httpResponse);
-            }
-        });
-
         authenticateButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 onAuthenticateClick();
@@ -61,15 +51,6 @@ public class MainActivity extends Activity implements
         });
     }
 
-    protected void testHTTP(TextView responseView) {
-        HttpTransactionTest http = new HttpTransactionTest(responseView);
-        try {
-            responseView.setText(http.getQuote());
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
-
-    }
 
     protected void onAuthenticateClick() {
         AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,

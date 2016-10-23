@@ -1,12 +1,33 @@
 package com.inrotation.andrew.inrotation;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import java.net.URL;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.Volley;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.VolleyError;
+
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
@@ -42,7 +63,7 @@ public class HomeScreenActivity extends AppCompatActivity implements
             resAccessToken = extras.getString("resAccessToken");
         }
 
-       // if (response.getType() == AuthenticationResponse.Type.TOKEN) {
+        // if (response.getType() == AuthenticationResponse.Type.TOKEN) {
         Config playerConfig = new Config(this, resAccessToken, CLIENT_ID);
         Spotify.getPlayer(playerConfig, this, new SpotifyPlayer.InitializationObserver() {
             @Override
@@ -51,11 +72,58 @@ public class HomeScreenActivity extends AppCompatActivity implements
                 mPlayer.addConnectionStateCallback(HomeScreenActivity.this);
                 mPlayer.addNotificationCallback(HomeScreenActivity.this);
             }
+
             @Override
             public void onError(Throwable throwable) {
                 Log.e("HomeScreenActivity", "Could not initialize player: " + throwable.getMessage());
             }
         });
+
+
+        // -- Test HTTP Req
+        /*final Button httpReqButton = (Button) findViewById(R.id.httptest);
+        final TextView httpResponse = (TextView) findViewById(R.id.responsetest);
+
+        httpReqButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                testHTTP(httpResponse);
+            }
+        });*/
+
+
+        /*final TextView mTextView = (TextView) findViewById(R.id.responsetest);
+
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://www.google.com";
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        mTextView.setText("Response is: " + response.substring(0, 500));
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                mTextView.setText("That didn't work!");
+            }
+        });
+// Add the request to the RequestQueue.
+        queue.add(stringRequest);*/
+    }
+
+    protected void testHTTP(TextView responseView) {
+        HttpTransactionTest http = new HttpTransactionTest(responseView);
+        try {
+            responseView.setText(http.getQuote());
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
+
     }
 
     /*
@@ -109,6 +177,33 @@ public class HomeScreenActivity extends AppCompatActivity implements
         Log.d("HomeScreenActivity", "User logged in");
 
         mPlayer.playUri(null, "spotify:track:3gATNBVu8d7oWs9WijPDjD", 0, 0);
+
+        final TextView mSongNameView = (TextView) findViewById(R.id.songNameView);
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        //String url = "http://www.google.com";
+        Metadata metad = mPlayer.getMetadata();
+
+       /* Log.d("HomeScreenActivity", url);
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        mSongNameView.setText("Response is: " + response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                mSongNameView.setText("That didn't work!");
+            }
+        });
+// Add the request to the RequestQueue.
+        queue.add(stringRequest);*/
+
         /*while (mPlayer.getPlaybackState().isPlaying) {
 
            /* int load = R.drawable.loader;
@@ -161,5 +256,17 @@ public class HomeScreenActivity extends AppCompatActivity implements
     @Override
     public void onConnectionMessage(String message) {
         Log.d("HomeScreenActivity", "Received connection message: " + message);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
     }
 }

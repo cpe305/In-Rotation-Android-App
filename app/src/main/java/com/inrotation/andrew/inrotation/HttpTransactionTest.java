@@ -3,7 +3,7 @@ package com.inrotation.andrew.inrotation;
 //import com.android.volley.Request;
 //import com.android.volley.RequestQueue;
 //import com.android.volley.toolbox.ImageLoader;
-//import com.android.volley.toolbox.Volley;
+import com.android.volley.toolbox.Volley;
 
 import android.os.AsyncTask;
 import android.widget.TextView;
@@ -42,7 +42,7 @@ public class HttpTransactionTest extends AsyncTask<Object, Void, String> {
         String[] urls = new String[2];
         urls[0] = url;
         String res = doInBackground(url);
-
+        urls[1] = res;
         return url;
     }
 
@@ -54,6 +54,7 @@ public class HttpTransactionTest extends AsyncTask<Object, Void, String> {
         try {
             URL url = new URL(urlString);
             urlConnection = (HttpURLConnection) url.openConnection();
+            Log.d("HTTPTranscation", "yup");
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
 
             try {
@@ -64,6 +65,7 @@ public class HttpTransactionTest extends AsyncTask<Object, Void, String> {
                     i = in.read();
                 }
                 res = bo.toString();
+                Log.d("HTTPTranscation", res);
             } catch (IOException e) {
                 res = "";
             }
