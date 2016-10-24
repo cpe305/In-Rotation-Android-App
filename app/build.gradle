@@ -5,7 +5,7 @@ android {
     buildToolsVersion '24.0.2'
     defaultConfig {
         applicationId "com.inrotation.andrew.inrotation"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -23,13 +23,10 @@ repositories {
     flatDir {
         dirs 'libs'
     }
-    mavenCentral()
-    maven { url "https://jitpack.io" }
 }
 
 
 dependencies {
-    compile 'com.github.kaaes:spotify-web-api-android:0.4.1'
 
     compile 'com.android.volley:volley:1.0.0'
 

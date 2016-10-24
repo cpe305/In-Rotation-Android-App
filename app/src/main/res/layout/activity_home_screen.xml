@@ -11,34 +11,39 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.inrotation.andrew.inrotation.HomeScreenActivity">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="?android:attr/alertDialogIcon"
+        android:id="@+id/userProfilePicView"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="8dp" />
+
     <TextView
         android:text="Andrew Cofano"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:id="@+id/userNameView"
         android:textSize="24sp"
         android:textColor="@color/accent_material_dark_1"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/alert_dark_frame"
-        android:layout_below="@+id/userNameView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="135dp"
-        android:id="@+id/albumCoverView" />
+        android:layout_alignTop="@+id/userProfilePicView"
+        android:layout_toRightOf="@+id/userProfilePicView"
+        android:layout_toEndOf="@+id/userProfilePicView"
+        android:layout_marginLeft="23dp"
+        android:layout_marginStart="23dp" />
 
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/albumCoverView"
-        android:layout_alignLeft="@+id/albumCoverView"
-        android:layout_alignStart="@+id/albumCoverView"
-        android:layout_marginTop="25dp"
-        android:id="@+id/songNameView" />
+        android:id="@+id/songNameView"
+        android:layout_marginTop="22dp"
+        android:layout_below="@+id/userNameView"
+        android:layout_alignLeft="@+id/userNameView"
+        android:layout_alignStart="@+id/userNameView" />
 
 </RelativeLayout>
