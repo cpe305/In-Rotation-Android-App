@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.widget.ImageView;
@@ -70,6 +71,11 @@ public class HomeScreenActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+
+        getSupportActionBar().setTitle("My Home");
 
         /*Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -236,7 +242,7 @@ public class HomeScreenActivity extends AppCompatActivity implements
 
         //mPlayer.playUri(null, "spotify:track:3gATNBVu8d7oWs9WijPDjD", 0, 0);
 
-        final TextView mSongNameView = (TextView) findViewById(R.id.songNameView);
+        //final TextView mSongNameView = (TextView) findViewById(R.id.songNameView);
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -253,8 +259,11 @@ public class HomeScreenActivity extends AppCompatActivity implements
                         try {
                             //JSONObject jResponse = response.getJSONObject("album");
                             JSONArray profilePic = response.getJSONArray("images");
-                            String profilePicURL = profilePic.getString(1);
+                            String userName = response.getString("display_name");
+                            JSONObject profilePicObject = profilePic.getJSONObject(0);
+                            String profilePicURL = profilePicObject.getString("url");
                             Log.d("Profile Pic", profilePicURL);
+                            loadUserNameView(userName);
                             loadProfilePic(profilePicURL);
 
                             //mSongNameView.setText(name);
@@ -268,7 +277,7 @@ public class HomeScreenActivity extends AppCompatActivity implements
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                mSongNameView.setText("That didn't work!" + error.toString());
+                //mSongNameView.setText("That didn't work!" + error.toString());
                 Log.d("Volley", error.toString());
             }
         }
@@ -303,6 +312,12 @@ public class HomeScreenActivity extends AppCompatActivity implements
                 });
         // Access the RequestQueue through your singleton class.
         AppSingleton.getInstance(this).addToRequestQueue(request);
+    }
+
+    public void loadUserNameView(String userName) {
+        final TextView userNameView = (TextView) findViewById(R.id.userProfileNameView);
+        userNameView.setText(userName);
+
     }
 
     @Override
