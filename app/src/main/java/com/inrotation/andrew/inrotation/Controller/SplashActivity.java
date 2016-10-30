@@ -1,4 +1,4 @@
-package com.inrotation.andrew.inrotation;
+package com.inrotation.andrew.inrotation.Controller;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

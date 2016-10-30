@@ -21,7 +21,7 @@
         </activity>
         -->
         <activity
-            android:name=".SplashActivity"
+            android:name=".Controller.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,12 +30,13 @@
             </intent-filter>
         </activity>
 
-        <activity  android:name=".MainActivity"  android:screenOrientation="portrait" />
+        <activity  android:name=".Controller.MainActivity"  android:screenOrientation="portrait" />
+        <activity android:name=".Controller.NewPlaylistActivity" android:screenOrientation="portrait"/>
 
         <activity
         android:name="com.spotify.sdk.android.authentication.LoginActivity"
         android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".HomeScreenActivity" />
+        <activity android:name=".Controller.HomeScreenActivity" />
     </application>
 
 </manifest>

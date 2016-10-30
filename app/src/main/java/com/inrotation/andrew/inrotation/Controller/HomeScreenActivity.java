@@ -1,37 +1,28 @@
-package com.inrotation.andrew.inrotation;
+package com.inrotation.andrew.inrotation.Controller;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.ArrayMap;
 import android.util.Log;
-import android.widget.ImageView;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+
+import java.util.Map;
+
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageRequest;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.VolleyError;
 
 import org.json.JSONArray;
@@ -43,13 +34,14 @@ import org.json.JSONObject;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;*/
+import com.inrotation.andrew.inrotation.AppSingleton;
+import com.inrotation.andrew.inrotation.R;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
 import com.spotify.sdk.android.player.Config;
 import com.spotify.sdk.android.player.ConnectionStateCallback;
 import com.spotify.sdk.android.player.Error;
-import com.spotify.sdk.android.player.Metadata;
 import com.spotify.sdk.android.player.Player;
 import com.spotify.sdk.android.player.PlayerEvent;
 import com.spotify.sdk.android.player.Spotify;
@@ -99,6 +91,15 @@ public class HomeScreenActivity extends AppCompatActivity implements
         });*/
 
         onAuthenticateClick();
+
+        final FloatingActionButton newPlaylistButton = (FloatingActionButton) findViewById(R.id.CreatePlaylistActionButton);
+
+        newPlaylistButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent newPlaylistIntent = new Intent(v.getContext(), NewPlaylistActivity.class);
+                startActivity(newPlaylistIntent);
+            }
+        });
 
         /*final TextView mSongNameView = (TextView) findViewById(R.id.songNameView);
 

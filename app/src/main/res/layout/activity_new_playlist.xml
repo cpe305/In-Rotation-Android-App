@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_home_screen"
+    tools:context="com.inrotation.andrew.inrotation.Controller.NewPlaylistActivity">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_width="match_parent" />
+
+    <TextView
+        android:text="Playlist Name:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="30dp"
+        android:id="@+id/textView2"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium.Inverse"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textSize="24sp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="normal|bold"
+        android:layout_below="@+id/my_toolbar"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="255dp"
+        android:layout_height="wrap_content"
+        android:hint="Name"
+        android:layout_below="@+id/textView2"
+        android:layout_alignStart="@+id/textView2"
+        android:id="@+id/editPlaylistName"
+        android:inputType="text"
+        android:imeOptions="actionDone"
+        android:layout_toStartOf="@+id/button" />
+
+    <TextView
+        android:text="Pick a Song:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:id="@+id/textView3"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium.Inverse"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textSize="24sp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="normal|bold"
+        android:layout_below="@+id/editPlaylistName"
+        android:layout_alignStart="@+id/editPlaylistName" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:ems="10"
+        android:id="@+id/FirstSongNameSearch"
+        android:layout_below="@+id/textView3"
+        android:layout_alignStart="@+id/textView3"
+        android:hint="Song Name"
+        android:imeOptions="actionSearch"
+        android:layout_toStartOf="@+id/button2"
+        android:layout_alignEnd="@+id/editPlaylistName" />
+
+    <Button
+        android:text="Done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@android:style/Widget.Material.Button.Colored"
+        android:elevation="11dp"
+        android:id="@+id/PlaylistNameDoneButton"
+        android:layout_alignBaseline="@+id/editPlaylistName"
+        android:layout_alignBottom="@+id/editPlaylistName"
+        android:layout_alignStart="@+id/button2" />
+
+    <Button
+        android:text="Select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button2"
+        style="@android:style/Widget.Material.Button.Colored"
+        android:elevation="11dp"
+        android:layout_alignTop="@+id/FirstSongNameSearch"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

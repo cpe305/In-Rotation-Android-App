@@ -5,7 +5,7 @@
     android:id="@+id/activity_home_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.inrotation.andrew.inrotation.HomeScreen1Activity">
+    tools:context="com.inrotation.andrew.inrotation.Controller.HomeScreenActivity">
 
 
     <android.support.v7.widget.Toolbar
@@ -22,7 +22,6 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_delete"
         android:layout_marginStart="17dp"
         android:id="@+id/userProfilePicView"
         android:layout_marginTop="15dp"
@@ -32,7 +31,6 @@
         android:layout_alignParentStart="true" />
 
     <TextView
-        android:text="User Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/userProfileNameView"
@@ -41,12 +39,63 @@
         android:layout_toEndOf="@+id/userProfilePicView"
         android:layout_marginStart="10dp" />
 
-    <Space
-        android:layout_width="match_parent"
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minHeight="131dp"
-        android:background="@color/colorPrimary"
-        android:layout_below="@+id/my_toolbar"
-        android:layout_alignParentStart="true" />
+        android:clickable="true"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/ic_menu_edit"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="33dp"
+        android:id="@+id/CreatePlaylistActionButton"
+        app:elevation="5dp"
+        app:backgroundTint="@color/colorAccent" />
+
+    <TextView
+        android:text="Recent Playlists"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:textStyle="normal|bold"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium.Inverse"
+        android:textSize="24sp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textColor="@color/colorPrimary"
+        android:layout_below="@+id/userProfilePicView"
+        android:layout_alignStart="@+id/userProfilePicView"
+        android:layout_marginTop="28dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/alert_light_frame"
+        android:id="@+id/imageView"
+        android:minHeight="108dp"
+        android:minWidth="108dp"
+        android:layout_alignTop="@+id/imageView3"
+        android:layout_toEndOf="@+id/userProfilePicView" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/alert_light_frame"
+        android:id="@+id/imageView2"
+        android:minHeight="108dp"
+        android:minWidth="108dp"
+        android:layout_alignTop="@+id/imageView"
+        android:layout_toEndOf="@+id/imageView" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/alert_light_frame"
+        android:id="@+id/imageView3"
+        android:minHeight="108dp"
+        android:minWidth="108dp"
+        android:layout_marginTop="24dp"
+        android:layout_below="@+id/textView"
+        android:layout_toStartOf="@+id/imageView" />
 
 </RelativeLayout>
