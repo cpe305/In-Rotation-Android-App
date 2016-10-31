@@ -1,28 +1,19 @@
-package com.inrotation.andrew.inrotation.Controller;
+package com.inrotation.andrew.inrotation.Presenter;
 
 //import com.android.volley.Request;
 //import com.android.volley.RequestQueue;
 //import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.Volley;
 
 import android.os.AsyncTask;
 import android.widget.TextView;
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Objects;
 
 /**
  * Created by brady on 10/20/16.

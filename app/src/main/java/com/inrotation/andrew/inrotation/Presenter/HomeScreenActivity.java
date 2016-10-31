@@ -1,4 +1,4 @@
-package com.inrotation.andrew.inrotation.Controller;
+package com.inrotation.andrew.inrotation.Presenter;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import java.util.Map;
@@ -34,7 +33,7 @@ import org.json.JSONObject;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;*/
-import com.inrotation.andrew.inrotation.AppSingleton;
+import com.inrotation.andrew.inrotation.Model.AppSingleton;
 import com.inrotation.andrew.inrotation.R;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;

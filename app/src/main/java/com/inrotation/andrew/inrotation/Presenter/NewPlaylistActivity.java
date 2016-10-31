@@ -1,9 +1,6 @@
-package com.inrotation.andrew.inrotation.Controller;
+package com.inrotation.andrew.inrotation.Presenter;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.app.Activity;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.ArrayMap;
