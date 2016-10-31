@@ -1,17 +1,20 @@
 package com.inrotation.andrew.inrotation.Model;
 
+import java.util.ArrayList;
+
 public class Playlist {
 
     private String playlistName;
-    private String owner;
+    private HostUser owner;
     private int songCount;
     private int playlistDuration;
 
     private Song currentSong;
+    private ArrayList<Song> songList;
     private Song nextSong;
     private Song prevSong;
 
-    public Playlist(String playlistName, String owner, int songCount, int playlistDuration) {
+    public Playlist(String playlistName, HostUser owner, int songCount, int playlistDuration) {
         this.playlistName = playlistName;
         this.owner = owner;
         this.songCount = songCount;

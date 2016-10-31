@@ -5,4 +5,10 @@ package com.inrotation.andrew.inrotation.Model;
  */
 
 public class GuestUser extends User {
+
+    private Playlist attendedPlaylist;
+
+    public GuestUser(String name) {
+        this.name = name;
+    }
 }

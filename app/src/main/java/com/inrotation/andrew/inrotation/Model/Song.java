@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class Song {
 
-    private String songName;
+    public String songName;
     private ArrayList<String> artists;
     private String album;
     private int duration;
-    private ArrayList<String> albumCovers;
+    private ArrayList<String> albumCoverURLs;
     private String songURI;
 
 
@@ -18,7 +18,7 @@ public class Song {
         this.artists = artists;
         this.album = album;
         this.duration = duration;
-        this.albumCovers = albumCoverURLs;
+        this.albumCoverURLs = albumCoverURLs;
         this.songURI = songURI;
     }
 

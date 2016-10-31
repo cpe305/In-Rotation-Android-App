@@ -6,7 +6,7 @@ package com.inrotation.andrew.inrotation.Model;
 
 public abstract class User {
 
-    private String name;
+    protected String name;
 
 
 }
