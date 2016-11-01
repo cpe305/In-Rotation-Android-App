@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 
@@ -35,6 +36,8 @@ import java.util.Map;
  */
 
 public class NewPlaylistActivity extends AppCompatActivity {
+
+    private ListView mListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,10 +87,13 @@ public class NewPlaylistActivity extends AppCompatActivity {
     }
 
     protected void presentSongMatches(String searchInput) {
-
+        mListView = (ListView) findViewById(R.id.songSearchListView);
+        Log.d("PlaylistTttt", "In Present method");
         String[] searchWords = processSearchInput(searchInput);
         ArrayList<Song> songMatches = obtainSongMatches(searchWords);
-
+        StartSearchListAdapter adapter = new StartSearchListAdapter(this, songMatches);
+        Log.d("SongMatches", songMatches.toString());
+        mListView.setAdapter(adapter);
     }
 
     protected String[] processSearchInput(String searchInput) {
@@ -160,14 +166,15 @@ public class NewPlaylistActivity extends AppCompatActivity {
             String songName = jsonTrack.getString("name");
             JSONArray artistList = jsonTrack.getJSONArray("artists");
             String artist = artistList.getJSONObject(0).getString("name");
-            String album = jsonTrack.getJSONObject("album").getString("name");
-            JSONArray albumCoverList = jsonTrack.getJSONArray("images");
+            JSONObject album = jsonTrack.getJSONObject("album");
+            String albumName = album.getString("name");
+            JSONArray albumCoverList = album.getJSONArray("images");
             ArrayList<String> albumCovers = createAlbumCoverList(albumCoverList);
             int duration =  jsonTrack.getInt("duration_ms");
             String songURI = jsonTrack.getString("uri");
             boolean explicit = jsonTrack.getBoolean("explicit");
 
-            newSong = new Song(songName, artist, album, duration, albumCovers, songURI, explicit);
+            newSong = new Song(songName, artist, albumName, duration, albumCovers, songURI, explicit);
             return newSong;
         }
         catch (JSONException e) {
@@ -175,7 +182,6 @@ public class NewPlaylistActivity extends AppCompatActivity {
         }
 
         return newSong;
-
     }
 
 
