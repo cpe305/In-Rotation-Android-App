@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1091386829953",
+    "firebase_url": "https://in-rotation.firebaseio.com",
+    "project_id": "in-rotation",
+    "storage_bucket": "in-rotation.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1091386829953:android:31211fc9861ba807",
+        "android_client_info": {
+          "package_name": "com.inrotation.andrew.inrotation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1091386829953-tmt2r7ssccg21qbfs9ghm82o6q6e0l72.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOstreb9i0uNpUFjUN7S_O7zx1K37KFBQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

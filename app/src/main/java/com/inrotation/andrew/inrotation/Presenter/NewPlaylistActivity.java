@@ -87,6 +87,7 @@ public class NewPlaylistActivity extends AppCompatActivity {
 
         String[] searchWords = processSearchInput(searchInput);
         ArrayList<Song> songMatches = obtainSongMatches(searchWords);
+
     }
 
     protected String[] processSearchInput(String searchInput) {
@@ -153,26 +154,45 @@ public class NewPlaylistActivity extends AppCompatActivity {
 
 
     protected Song createSongOf(JSONObject jsonTrack) {
+        Song newSong = null;
 
-        /*NOTE:
-        * Create Song object from individual JSONObject
-        * REMEMBER: there are multiple artists and albumcovers...
-        * Duration is in milliseconds (side-note)
-         */
         try {
             String songName = jsonTrack.getString("name");
-            String artist = jsonTrack.getString("artists");
-            int duration;
+            JSONArray artistList = jsonTrack.getJSONArray("artists");
+            String artist = artistList.getJSONObject(0).getString("name");
+            String album = jsonTrack.getJSONObject("album").getString("name");
+            JSONArray albumCoverList = jsonTrack.getJSONArray("images");
+            ArrayList<String> albumCovers = createAlbumCoverList(albumCoverList);
+            int duration =  jsonTrack.getInt("duration_ms");
+            String songURI = jsonTrack.getString("uri");
+            boolean explicit = jsonTrack.getBoolean("explicit");
+
+            newSong = new Song(songName, artist, album, duration, albumCovers, songURI, explicit);
+            return newSong;
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
 
+        return newSong;
 
-
-        return null;
     }
 
+
+    protected ArrayList<String> createAlbumCoverList(JSONArray albumCovers) {
+        ArrayList<String> albumCoverURLs = new ArrayList<>();
+
+        for (int i = 0; i < albumCovers.length(); i++) {
+            try {
+                albumCoverURLs.add(albumCovers.getJSONObject(i).getString("url"));
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return albumCoverURLs;
+    }
 
     protected String createQuerySearchURL(String[] queryWords) {
         int index;
@@ -210,6 +230,7 @@ public class NewPlaylistActivity extends AppCompatActivity {
         });
         Button doneButton = (Button) findViewById(R.id.PlaylistNameDoneButton);
         doneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
                 Log.d("Done buton", "clicked");
                 setPlaylistName(editTextName.getText().toString());

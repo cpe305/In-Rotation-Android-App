@@ -45,7 +45,7 @@
         android:layout_toStartOf="@+id/button" />
 
     <TextView
-        android:text="Pick a Song:"
+        android:text="Pick a Starting Song:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -91,5 +91,14 @@
         android:elevation="11dp"
         android:layout_alignTop="@+id/FirstSongNameSearch"
         android:layout_alignParentEnd="true" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_below="@+id/button2"
+        android:layout_alignStart="@+id/FirstSongNameSearch"
+        android:layout_marginTop="29dp"
+
+        android:layout_height="wrap_content"
+        android:id="@+id/songSearchListView" />
 
 </RelativeLayout>
