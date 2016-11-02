@@ -88,7 +88,7 @@ public class NewPlaylistActivity extends AppCompatActivity {
 
     protected void presentSongMatches(String searchInput) {
         mListView = (ListView) findViewById(R.id.songSearchListView);
-        Log.d("PlaylistTttt", "In Present method");
+
         String[] searchWords = processSearchInput(searchInput);
         ArrayList<Song> songMatches = obtainSongMatches(searchWords);
         StartSearchListAdapter adapter = new StartSearchListAdapter(this, songMatches);
