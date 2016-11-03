@@ -1,6 +1,9 @@
 package com.inrotation.andrew.inrotation.Presenter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.ArrayMap;
@@ -8,6 +11,8 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -73,6 +78,9 @@ public class NewPlaylistActivity extends AppCompatActivity {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     presentSongMatches(editTextName.getText().toString());
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(editTextName.getWindowToken(),
+                            InputMethodManager.RESULT_UNCHANGED_SHOWN);
                     handled = true;
                 }
                 return handled;
@@ -90,10 +98,17 @@ public class NewPlaylistActivity extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.songSearchListView);
 
         String[] searchWords = processSearchInput(searchInput);
-        ArrayList<Song> songMatches = obtainSongMatches(searchWords);
+        final ArrayList<Song> songMatches = obtainSongMatches(searchWords);
         StartSearchListAdapter adapter = new StartSearchListAdapter(this, songMatches);
         Log.d("SongMatches", songMatches.toString());
         mListView.setAdapter(adapter);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+                Song selectedSong = songMatches.get(position);
+                startActivePlaylist(selectedSong);
+            }
+        });
     }
 
     protected String[] processSearchInput(String searchInput) {
@@ -102,6 +117,19 @@ public class NewPlaylistActivity extends AppCompatActivity {
         Log.d("processSearchInput", searchInput);
         return searchWords;
 
+    }
+
+
+    protected void startActivePlaylist(Song selectedSong) {
+        Intent i = new Intent();
+        Bundle b = new Bundle();
+        b.putParcelable("package.Model.Song", selectedSong);
+        i.putExtras(b);
+        i.setClass(this, ActivePlaylistActivity.class);
+        startActivity(i);
+
+
+        //Sending first song to new active playlist
     }
 
     protected ArrayList<Song> obtainSongMatches(String[] queryWords) {
@@ -229,6 +257,9 @@ public class NewPlaylistActivity extends AppCompatActivity {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     setPlaylistName(editTextName.getText().toString());
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(editTextName.getWindowToken(),
+                            InputMethodManager.RESULT_UNCHANGED_SHOWN);
                     handled = true;
                 }
                 return handled;

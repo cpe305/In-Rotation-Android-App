@@ -29,14 +29,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity  android:name=".Presenter.MainActivity"  android:screenOrientation="portrait" />
-        <activity android:name=".Presenter.NewPlaylistActivity" android:screenOrientation="portrait"/>
-
         <activity
-        android:name="com.spotify.sdk.android.authentication.LoginActivity"
-        android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:name=".Presenter.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Presenter.NewPlaylistActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.spotify.sdk.android.authentication.LoginActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".Presenter.HomeScreenActivity" />
+        <activity android:name=".Presenter.ActivePlaylistActivity"></activity>
     </application>
 
 </manifest>
