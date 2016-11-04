@@ -3,7 +3,6 @@ package com.inrotation.andrew.inrotation.Presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.ArrayMap;
@@ -99,7 +98,7 @@ public class NewPlaylistActivity extends AppCompatActivity {
 
         String[] searchWords = processSearchInput(searchInput);
         final ArrayList<Song> songMatches = obtainSongMatches(searchWords);
-        StartSearchListAdapter adapter = new StartSearchListAdapter(this, songMatches);
+        SearchListAdapter adapter = new SearchListAdapter(this, songMatches);
         Log.d("SongMatches", songMatches.toString());
         mListView.setAdapter(adapter);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -123,7 +122,8 @@ public class NewPlaylistActivity extends AppCompatActivity {
     protected void startActivePlaylist(Song selectedSong) {
         Intent i = new Intent();
         Bundle b = new Bundle();
-        b.putParcelable("package.Model.Song", selectedSong);
+        b.putSerializable("firstSong", selectedSong);
+        b.putString("playlistName", getSupportActionBar().getTitle().toString());
         i.putExtras(b);
         i.setClass(this, ActivePlaylistActivity.class);
         startActivity(i);

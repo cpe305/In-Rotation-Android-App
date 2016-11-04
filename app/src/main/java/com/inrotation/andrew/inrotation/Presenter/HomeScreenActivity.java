@@ -34,6 +34,7 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;*/
 import com.inrotation.andrew.inrotation.Model.AppSingleton;
+import com.inrotation.andrew.inrotation.Model.SpotifyAccess;
 import com.inrotation.andrew.inrotation.R;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
@@ -163,6 +164,9 @@ public class HomeScreenActivity extends AppCompatActivity implements
             AuthenticationResponse authenRes = AuthenticationClient.getResponse(resultCode, intent);
             if (authenRes.getType() == AuthenticationResponse.Type.TOKEN) {
                 resAccessToken = authenRes.getAccessToken();
+                SpotifyAccess spotifyAccessInstance = SpotifyAccess.getInstance();
+                spotifyAccessInstance.setAccessToken(resAccessToken);
+                spotifyAccessInstance.setClientId(CLIENT_ID);
                 Config playerConfig = new Config(this, authenRes.getAccessToken(), CLIENT_ID);
                 Spotify.getPlayer(playerConfig, this, new SpotifyPlayer.InitializationObserver() {
                     @Override
@@ -170,6 +174,8 @@ public class HomeScreenActivity extends AppCompatActivity implements
                         mPlayer = spotifyPlayer;
                         mPlayer.addConnectionStateCallback(HomeScreenActivity.this);
                         mPlayer.addNotificationCallback(HomeScreenActivity.this);
+                        SpotifyAccess spotifyAccessInstance = SpotifyAccess.getInstance();
+                        spotifyAccessInstance.setSpotifyPlayer(mPlayer);
                     }
 
                     @Override

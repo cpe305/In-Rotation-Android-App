@@ -3,9 +3,10 @@ package com.inrotation.andrew.inrotation.Model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Song implements Parcelable {
+public class Song implements Serializable {
 
     public String songName;
     public  String artists;
@@ -27,16 +28,4 @@ public class Song implements Parcelable {
         this.isExplicit = isExplicit;
     }
 
-
-    @Override
-    public int describeContents() {
-        return hashCode();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(songName);
-        dest.writeString(artists);
-        dest.writeStringList(albumCoverURLs);
-    }
 }

@@ -24,14 +24,14 @@ import static com.inrotation.andrew.inrotation.R.layout.activity_new_playlist;
  * Created by andrewcofano on 11/1/16.
  */
 
-public class StartSearchListAdapter extends BaseAdapter {
+public class SearchListAdapter extends BaseAdapter {
 
 
     private Context mContext;
     private LayoutInflater mInflater;
     private ArrayList<Song> mDataSource;
 
-    public StartSearchListAdapter(Context context, ArrayList<Song> items) {
+    public SearchListAdapter(Context context, ArrayList<Song> items) {
         mContext = context;
         mDataSource = items;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
