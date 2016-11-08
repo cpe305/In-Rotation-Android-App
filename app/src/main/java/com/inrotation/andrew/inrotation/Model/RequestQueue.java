@@ -1,11 +1,10 @@
-package com.inrotation.andrew.inrotation.Model;
+package com.inrotation.andrew.inrotation.model;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.LruCache;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
@@ -13,13 +12,13 @@ import com.android.volley.toolbox.Volley;
  * Created by Andrew on 10/23/16.
  */
 
-public class AppSingleton {
-    private static AppSingleton mInstance;
-    private RequestQueue mRequestQueue;
+public class RequestQueue {
+    private static RequestQueue mInstance;
+    private com.android.volley.RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
-    private static Context mCtx;
+    private Context mCtx;
 
-    private AppSingleton(Context context) {
+    private RequestQueue(Context context) {
         mCtx = context;
         mRequestQueue = getRequestQueue();
 
@@ -40,14 +39,14 @@ public class AppSingleton {
                 });
     }
 
-    public static synchronized AppSingleton getInstance(Context context) {
+    public static synchronized RequestQueue getInstance(Context context) {
         if (mInstance == null) {
-            mInstance = new AppSingleton(context);
+            mInstance = new RequestQueue(context);
         }
         return mInstance;
     }
 
-    public RequestQueue getRequestQueue() {
+    private com.android.volley.RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
             // getApplicationContext() is key, it keeps you from leaking the
             // Activity or BroadcastReceiver if someone passes one in.

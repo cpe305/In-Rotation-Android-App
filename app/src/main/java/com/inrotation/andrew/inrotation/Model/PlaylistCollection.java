@@ -1,4 +1,4 @@
-package com.inrotation.andrew.inrotation.Model;
+package com.inrotation.andrew.inrotation.model;
 
 import java.util.ArrayList;
 

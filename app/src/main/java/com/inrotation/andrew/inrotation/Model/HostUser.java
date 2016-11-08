@@ -1,4 +1,4 @@
-package com.inrotation.andrew.inrotation.Model;
+package com.inrotation.andrew.inrotation.model;
 
 import java.util.ArrayList;
 
@@ -13,9 +13,20 @@ public class HostUser extends User {
     private String profilePicURL;
     private ArrayList<Playlist> playlistCollection;
 
-    public HostUser(String name, String spotifyAccessToken, String profilePicURL) {
+    public HostUser(String name, String spotifyAccessToken, String profilePicURL)
+    {
         this.name = name;
         this.spotifyAccessToken = spotifyAccessToken;
         this.profilePicURL = profilePicURL;
     }
+
+    public String getSpotifyAccessToken() {
+        return spotifyAccessToken;
+    }
+
+    public String getProfilePicURL() {
+        return profilePicURL;
+    }
+
+
 }

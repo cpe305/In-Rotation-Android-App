@@ -1,7 +1,4 @@
-package com.inrotation.andrew.inrotation.Model;
-
-import android.os.Parcel;
-import android.os.Parcelable;
+package com.inrotation.andrew.inrotation.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;

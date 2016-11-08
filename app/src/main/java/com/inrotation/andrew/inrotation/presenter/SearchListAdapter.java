@@ -1,4 +1,4 @@
-package com.inrotation.andrew.inrotation.Presenter;
+package com.inrotation.andrew.inrotation.presenter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -12,13 +12,11 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
-import com.inrotation.andrew.inrotation.Model.AppSingleton;
-import com.inrotation.andrew.inrotation.Model.Song;
+import com.inrotation.andrew.inrotation.model.RequestQueue;
+import com.inrotation.andrew.inrotation.model.Song;
 import com.inrotation.andrew.inrotation.R;
 
 import java.util.ArrayList;
-
-import static com.inrotation.andrew.inrotation.R.layout.activity_new_playlist;
 
 /**
  * Created by andrewcofano on 11/1/16.
@@ -70,7 +68,7 @@ public class SearchListAdapter extends BaseAdapter {
                     }
                 });
         // Access the RequestQueue through your singleton class.
-        AppSingleton.getInstance(mContext).addToRequestQueue(request);;
+        RequestQueue.getInstance(mContext).addToRequestQueue(request);;
 
 
         return rowView;

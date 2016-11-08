@@ -1,4 +1,4 @@
-package com.inrotation.andrew.inrotation.Presenter;
+package com.inrotation.andrew.inrotation.presenter;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,13 +6,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ListView;
 
-import com.inrotation.andrew.inrotation.Model.Song;
-import com.inrotation.andrew.inrotation.Model.SpotifyAccess;
+import com.inrotation.andrew.inrotation.model.Song;
+import com.inrotation.andrew.inrotation.model.SpotifyAccess;
 import com.inrotation.andrew.inrotation.R;
-import com.spotify.sdk.android.player.Config;
 import com.spotify.sdk.android.player.Player;
-import com.spotify.sdk.android.player.Spotify;
-import com.spotify.sdk.android.player.SpotifyPlayer;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.inrotation.andrew.inrotation.Model;
+package com.inrotation.andrew.inrotation.model;
 
 /**
  * Created by andrewcofano on 10/19/16.
@@ -7,6 +7,5 @@ package com.inrotation.andrew.inrotation.Model;
 public abstract class User {
 
     protected String name;
-
 
 }

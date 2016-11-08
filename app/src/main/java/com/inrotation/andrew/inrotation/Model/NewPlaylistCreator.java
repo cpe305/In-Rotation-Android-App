@@ -1,4 +1,4 @@
-package com.inrotation.andrew.inrotation.Model;
+package com.inrotation.andrew.inrotation.model;
 
 /**
  * Created by Andrew on 10/30/16.

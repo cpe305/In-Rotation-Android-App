@@ -1,15 +1,6 @@
-package com.inrotation.andrew.inrotation.Model;
+package com.inrotation.andrew.inrotation.model;
 
-import android.content.Context;
-import android.util.Log;
-
-import com.inrotation.andrew.inrotation.Presenter.HomeScreenActivity;
-import com.spotify.sdk.android.player.Config;
-import com.spotify.sdk.android.player.Error;
 import com.spotify.sdk.android.player.Player;
-import com.spotify.sdk.android.player.PlayerEvent;
-import com.spotify.sdk.android.player.Spotify;
-import com.spotify.sdk.android.player.SpotifyPlayer;
 
 /**
  * Created by andrewcofano on 11/3/16.

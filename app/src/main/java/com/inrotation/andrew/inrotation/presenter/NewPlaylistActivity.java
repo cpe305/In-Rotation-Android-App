@@ -1,4 +1,4 @@
-package com.inrotation.andrew.inrotation.Presenter;
+package com.inrotation.andrew.inrotation.presenter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,7 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.inrotation.andrew.inrotation.Model.Song;
+import com.inrotation.andrew.inrotation.model.Song;
 import com.inrotation.andrew.inrotation.R;
 
 import org.json.JSONArray;
@@ -41,6 +41,7 @@ import java.util.Map;
 
 public class NewPlaylistActivity extends AppCompatActivity {
 
+    private static final String SPOTIFY_SEARCH_URL_STANDARD = "https://api.spotify.com/v1/search?q=";
     private ListView mListView;
 
     @Override
@@ -160,6 +161,7 @@ public class NewPlaylistActivity extends AppCompatActivity {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            throw new RuntimeException("context");
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -207,9 +209,9 @@ public class NewPlaylistActivity extends AppCompatActivity {
         }
         catch (JSONException e) {
             e.printStackTrace();
+            throw new RuntimeException("context");
         }
 
-        return newSong;
     }
 
 
@@ -222,6 +224,7 @@ public class NewPlaylistActivity extends AppCompatActivity {
             }
             catch (JSONException e) {
                 e.printStackTrace();
+                throw new RuntimeException("context");
             }
         }
 
@@ -230,22 +233,23 @@ public class NewPlaylistActivity extends AppCompatActivity {
 
     protected String createQuerySearchURL(String[] queryWords) {
         int index;
-        String trackSearchURL = "https://api.spotify.com/v1/search?q=";
-
+        StringBuilder trackSearchURL = new StringBuilder();
+        trackSearchURL.append(SPOTIFY_SEARCH_URL_STANDARD);
 
         index = 0;
         while (index < queryWords.length) {
             if (index != (queryWords.length - 1)) {
-                trackSearchURL += (queryWords[index] + "+");
+                trackSearchURL.append(queryWords[index]);
+                trackSearchURL.append("+");
             }
             else {
-                trackSearchURL += (queryWords[index]);
+                trackSearchURL.append(queryWords[index]);
             }
             index++;
         }
-        trackSearchURL += "&type=track&limit=3";
+        trackSearchURL.append("&type=track&limit=3");
 
-        return trackSearchURL;
+        return trackSearchURL.toString();
     }
 
 

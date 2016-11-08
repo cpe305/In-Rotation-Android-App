@@ -1,4 +1,4 @@
-package com.inrotation.andrew.inrotation.Presenter;
+package com.inrotation.andrew.inrotation.presenter;
 
 import android.os.Bundle;
 

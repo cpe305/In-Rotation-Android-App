@@ -1,4 +1,4 @@
-package com.inrotation.andrew.inrotation.Presenter;
+package com.inrotation.andrew.inrotation.presenter;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -33,8 +32,8 @@ import org.json.JSONObject;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;*/
-import com.inrotation.andrew.inrotation.Model.AppSingleton;
-import com.inrotation.andrew.inrotation.Model.SpotifyAccess;
+import com.inrotation.andrew.inrotation.model.RequestQueue;
+import com.inrotation.andrew.inrotation.model.SpotifyAccess;
 import com.inrotation.andrew.inrotation.R;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
@@ -69,27 +68,6 @@ public class HomeScreenActivity extends AppCompatActivity implements
 
         getSupportActionBar().setTitle("My Home");
 
-        /*Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            resAccessToken = extras.getString("resAccessToken");
-        }
-
-        // if (response.getType() == AuthenticationResponse.Type.TOKEN) {
-        Config playerConfig = new Config(this, resAccessToken, CLIENT_ID);
-        Spotify.getPlayer(playerConfig, this, new SpotifyPlayer.InitializationObserver() {
-            @Override
-            public void onInitialized(SpotifyPlayer spotifyPlayer) {
-                mPlayer = spotifyPlayer;
-                mPlayer.addConnectionStateCallback(HomeScreenActivity.this);
-                mPlayer.addNotificationCallback(HomeScreenActivity.this);
-            }
-
-            @Override
-            public void onError(Throwable throwable) {
-                Log.e("HomeScreenActivity", "Could not initialize player: " + throwable.getMessage());
-            }
-        });*/
-
         onAuthenticateClick();
 
         final FloatingActionButton newPlaylistButton = (FloatingActionButton) findViewById(R.id.CreatePlaylistActionButton);
@@ -100,38 +78,6 @@ public class HomeScreenActivity extends AppCompatActivity implements
                 startActivity(newPlaylistIntent);
             }
         });
-
-        /*final TextView mSongNameView = (TextView) findViewById(R.id.songNameView);
-
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://api.spotify.com/v1/tracks/3gATNBVu8d7oWs9WijPDjD";
-
-        // Request a string response from the provided URL.
-        JsonObjectRequest arrayRequest = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("TAG", response.toString());
-
-                        try {
-                            //JSONObject jResponse = response.getJSONObject("album");
-                            String name = response.getString("name");
-                            mSongNameView.setText(name);
-
-                        }
-                        catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                mSongNameView.setText("That didn't work!");
-            }
-        });
-// Add the request to the RequestQueue.
-        queue.add(arrayRequest);*/
     }
 
 
@@ -145,15 +91,6 @@ public class HomeScreenActivity extends AppCompatActivity implements
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
     }
 
-    /*protected void testHTTP(TextView responseView) {
-        HttpTransactionTest http = new HttpTransactionTest(responseView);
-        try {
-            responseView.setText(http.getQuote());
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
-
-    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -187,31 +124,6 @@ public class HomeScreenActivity extends AppCompatActivity implements
         }
     }
 
-    /*
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-
-
-        if (response.getType() == AuthenticationResponse.Type.TOKEN) {
-            Config playerConfig = new Config(this, response.getAccessToken(), CLIENT_ID);
-            Spotify.getPlayer(playerConfig, this, new SpotifyPlayer.InitializationObserver() {
-                @Override
-                public void onInitialized(SpotifyPlayer spotifyPlayer) {
-                    mPlayer = spotifyPlayer;
-                    mPlayer.addConnectionStateCallback(HomeScreenActivity.this);
-                    mPlayer.addNotificationCallback(HomeScreenActivity.this);
-
-                }
-
-                @Override
-                public void onError(Throwable throwable) {
-                    Log.e("HomeScreenActivity", "Could not initialize player: " + throwable.getMessage());
-                }
-            });
-        }
-
-    }
-*/
 
     @Override
     protected void onDestroy() {
@@ -246,12 +158,8 @@ public class HomeScreenActivity extends AppCompatActivity implements
 
         Log.d("HomeScreenActivity", "User logged in");
 
-        //mPlayer.playUri(null, "spotify:track:3gATNBVu8d7oWs9WijPDjD", 0, 0);
-
-        //final TextView mSongNameView = (TextView) findViewById(R.id.songNameView);
-
         // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
+        com.android.volley.RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://api.spotify.com/v1/me";
 
         // Request a string response from the provided URL.
@@ -263,7 +171,7 @@ public class HomeScreenActivity extends AppCompatActivity implements
                         Log.d("TAG", response.toString());
 
                         try {
-                            //JSONObject jResponse = response.getJSONObject("album");
+
                             JSONArray profilePic = response.getJSONArray("images");
                             String userName = response.getString("display_name");
                             JSONObject profilePicObject = profilePic.getJSONObject(0);
@@ -272,11 +180,11 @@ public class HomeScreenActivity extends AppCompatActivity implements
                             loadUserNameView(userName);
                             loadProfilePic(profilePicURL);
 
-                            //mSongNameView.setText(name);
 
                         }
                         catch (JSONException e) {
                             e.printStackTrace();
+                            throw new RuntimeException("context");
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -317,7 +225,7 @@ public class HomeScreenActivity extends AppCompatActivity implements
                     }
                 });
         // Access the RequestQueue through your singleton class.
-        AppSingleton.getInstance(this).addToRequestQueue(request);
+        RequestQueue.getInstance(this).addToRequestQueue(request);
     }
 
     public void loadUserNameView(String userName) {
