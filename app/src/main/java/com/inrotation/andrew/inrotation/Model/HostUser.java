@@ -28,5 +28,8 @@ public class HostUser extends User {
         return profilePicURL;
     }
 
+    public String getUserName() {
+        return name;
+    }
 
 }

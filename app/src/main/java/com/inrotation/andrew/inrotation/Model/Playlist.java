@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class Playlist {
 
-    private String playlistName;
-    private HostUser owner;
-    private int songCount;
-    private int playlistDuration;
+    public String playlistName;
+    public HostUser owner;
+    public int songCount;
+    public int playlistDuration;
 
     private Song currentSong;
     private ArrayList<Song> songList;
@@ -20,6 +20,8 @@ public class Playlist {
         this.songCount = songCount;
         this.playlistDuration = playlistDuration;
     }
+
+
 
 
 
