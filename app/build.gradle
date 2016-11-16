@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'checkstyle'
+apply plugin: 'jacoco-android'
+apply from: './sonarqube.gradle'
 android {
     compileSdkVersion 24
     buildToolsVersion '24.0.2'
@@ -14,6 +16,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            testCoverageEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
@@ -26,6 +29,16 @@ repositories {
     flatDir {
         dirs 'libs'
     }
+}
+
+jacocoAndroidUnitTestReport {
+    csv.enabled false
+    html.enabled true
+    xml.enabled true
+}
+
+jacoco {
+    toolVersion = "0.7.7.201606060606"
 }
 
 

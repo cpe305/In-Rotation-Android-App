@@ -184,7 +184,7 @@ public class HomeScreenActivity extends AppCompatActivity implements
                         }
                         catch (JSONException e) {
                             e.printStackTrace();
-                            throw new RuntimeException("context");
+                           // throw new JSONObjectException(e);
                         }
                     }
                 }, new Response.ErrorListener() {
