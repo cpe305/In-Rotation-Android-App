@@ -6,7 +6,7 @@
     android:padding="6dip">
 
 
-    <ImageView
+    <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/albumCoverImgView"
         android:contentDescription="Album Cover"
         android:layout_width="64dp"

@@ -18,8 +18,10 @@ import android.widget.TextView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.android.volley.VolleyError;
 
@@ -32,6 +34,7 @@ import org.json.JSONObject;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;*/
+import com.inrotation.andrew.inrotation.model.Authenticator;
 import com.inrotation.andrew.inrotation.model.RequestQueue;
 import com.inrotation.andrew.inrotation.model.SpotifyAccess;
 import com.inrotation.andrew.inrotation.R;
@@ -55,6 +58,7 @@ public class HomeScreenActivity extends AppCompatActivity implements
     private Player mPlayer;
     private String resAccessToken;
     private AuthenticationResponse authenRes;
+    private Authenticator spotifyAuthenticator;
 
     private static final int REQUEST_CODE = 1337;
 
@@ -65,13 +69,11 @@ public class HomeScreenActivity extends AppCompatActivity implements
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-
         getSupportActionBar().setTitle("My Home");
 
         onAuthenticateClick();
 
         final FloatingActionButton newPlaylistButton = (FloatingActionButton) findViewById(R.id.CreatePlaylistActionButton);
-
         newPlaylistButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent newPlaylistIntent = new Intent(v.getContext(), NewPlaylistActivity.class);
@@ -82,13 +84,10 @@ public class HomeScreenActivity extends AppCompatActivity implements
 
 
     protected void onAuthenticateClick() {
-        AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,
-                AuthenticationResponse.Type.TOKEN,
-                REDIRECT_URI);
-        builder.setScopes(new String[]{"user-read-private", "streaming"});
-        AuthenticationRequest request = builder.build();
+        spotifyAuthenticator = new Authenticator();
+        AuthenticationRequest request = spotifyAuthenticator.openAuthenticateRequest();
 
-        AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
+        AuthenticationClient.openLoginActivity(this, Authenticator.REQUEST_CODE, request);
     }
 
 
@@ -97,7 +96,7 @@ public class HomeScreenActivity extends AppCompatActivity implements
         super.onActivityResult(requestCode, resultCode, intent);
 
         // Check if result comes from the correct activity
-        if (requestCode == REQUEST_CODE) {
+        if (requestCode == Authenticator.REQUEST_CODE) {
             AuthenticationResponse authenRes = AuthenticationClient.getResponse(resultCode, intent);
             if (authenRes.getType() == AuthenticationResponse.Type.TOKEN) {
                 resAccessToken = authenRes.getAccessToken();
@@ -210,9 +209,22 @@ public class HomeScreenActivity extends AppCompatActivity implements
 
 
     public void loadProfilePic(String imageURL) {
-        final ImageView userProfileView = (ImageView) findViewById(R.id.userProfilePicView);
+        //final ImageView userProfileView = (ImageView) findViewById(R.id.userProfilePicView);
+        NetworkImageView mNetworkImageView;
+        ImageLoader mImageLoader;
 
-        ImageRequest request = new ImageRequest(imageURL,
+        // Get the NetworkImageView that will display the image.
+        mNetworkImageView =(NetworkImageView) findViewById(R.id.userProfilePicView);
+
+        // Get the ImageLoader through your singleton class.
+        mImageLoader = RequestQueue.getInstance(this).getImageLoader();
+
+        // Set the URL of the image that should be loaded into this view, and
+        // specify the ImageLoader that will be used to make the request.
+        mNetworkImageView.setImageUrl(imageURL, mImageLoader);
+
+
+        /*ImageRequest request = new ImageRequest(imageURL,
                 new Response.Listener<Bitmap>() {
                     @Override
                     public void onResponse(Bitmap bitmap) {
@@ -225,7 +237,7 @@ public class HomeScreenActivity extends AppCompatActivity implements
                     }
                 });
         // Access the RequestQueue through your singleton class.
-        RequestQueue.getInstance(this).addToRequestQueue(request);
+        RequestQueue.getInstance(this).addToRequestQueue(request);*/
     }
 
     public void loadUserNameView(String userName) {
