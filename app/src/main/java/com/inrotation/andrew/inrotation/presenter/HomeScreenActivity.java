@@ -1,8 +1,10 @@
 package com.inrotation.andrew.inrotation.presenter;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -35,9 +37,12 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;*/
 import com.inrotation.andrew.inrotation.model.Authenticator;
+import com.inrotation.andrew.inrotation.model.HostUser;
 import com.inrotation.andrew.inrotation.model.RequestQueue;
 import com.inrotation.andrew.inrotation.model.SpotifyAccess;
 import com.inrotation.andrew.inrotation.R;
+import com.inrotation.andrew.inrotation.model.SpotifyProfileBuilder;
+import com.inrotation.andrew.inrotation.model.User;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
@@ -171,17 +176,30 @@ public class HomeScreenActivity extends AppCompatActivity implements
 
                         try {
 
-                            JSONArray profilePic = response.getJSONArray("images");
-                            String userName = response.getString("display_name");
-                            JSONObject profilePicObject = profilePic.getJSONObject(0);
-                            String profilePicURL = profilePicObject.getString("url");
-                            Log.d("Profile Pic", profilePicURL);
-                            loadUserNameView(userName);
-                            loadProfilePic(profilePicURL);
+
+                            SpotifyProfileBuilder profileBuilder = new SpotifyProfileBuilder();
+
+                            HostUser createdUser = (HostUser)profileBuilder.buildSpotifyProfile(response);
+                            if (createdUser != null) {
+                                loadUserNameView(createdUser.getUserName());
+                                loadProfilePic(createdUser.getProfilePicURL());
+                            }
+                            else {
+                                new AlertDialog.Builder(HomeScreenActivity.this)
+                                        .setTitle("Could not load Spotify profile")
+                                        .setMessage("Try logging back in again")
+                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.cancel();
+                                            }
+                                        })
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .show();
+                            }
 
 
                         }
-                        catch (JSONException e) {
+                        catch (Exception e) {
                             e.printStackTrace();
                            // throw new JSONObjectException(e);
                         }
@@ -215,29 +233,12 @@ public class HomeScreenActivity extends AppCompatActivity implements
 
         // Get the NetworkImageView that will display the image.
         mNetworkImageView =(NetworkImageView) findViewById(R.id.userProfilePicView);
-
         // Get the ImageLoader through your singleton class.
         mImageLoader = RequestQueue.getInstance(this).getImageLoader();
-
         // Set the URL of the image that should be loaded into this view, and
         // specify the ImageLoader that will be used to make the request.
         mNetworkImageView.setImageUrl(imageURL, mImageLoader);
 
-
-        /*ImageRequest request = new ImageRequest(imageURL,
-                new Response.Listener<Bitmap>() {
-                    @Override
-                    public void onResponse(Bitmap bitmap) {
-                        userProfileView.setImageBitmap(bitmap);
-                    }
-                }, 0, 0, null,
-                new Response.ErrorListener() {
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-        // Access the RequestQueue through your singleton class.
-        RequestQueue.getInstance(this).addToRequestQueue(request);*/
     }
 
     public void loadUserNameView(String userName) {

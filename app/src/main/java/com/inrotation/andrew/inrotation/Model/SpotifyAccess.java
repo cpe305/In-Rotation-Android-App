@@ -12,6 +12,7 @@ public class SpotifyAccess {
     private String accessToken;
     private String clientId;
     private Player spotifyPlayer;
+    private User spotifyUser;
 
 
     private SpotifyAccess() {
@@ -48,5 +49,13 @@ public class SpotifyAccess {
 
     public Player getSpotifyPlayer() {
         return spotifyPlayer;
+    }
+
+    public User getSpotifyUser() {
+        return spotifyUser;
+    }
+
+    public void setSpotifyUser(User spotifyUser) {
+        this.spotifyUser = spotifyUser;
     }
 }

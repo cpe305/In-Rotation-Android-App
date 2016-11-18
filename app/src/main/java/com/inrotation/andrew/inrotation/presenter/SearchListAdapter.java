@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.NetworkImageView;
 import com.inrotation.andrew.inrotation.model.RequestQueue;
 import com.inrotation.andrew.inrotation.model.Song;
 import com.inrotation.andrew.inrotation.R;
@@ -47,28 +49,21 @@ public class SearchListAdapter extends BaseAdapter {
         TextView artistTextView =
                 (TextView) rowView.findViewById(R.id.songArtistTextView);
 
-        final ImageView albumCoverImgView =
-                (ImageView) rowView.findViewById(R.id.albumCoverImgView);
-
         Song song = (Song) getItem(position);
 
         songTitleTextView.setText(song.songName);
         artistTextView.setText(song.artists);
 
-        ImageRequest request = new ImageRequest(song.albumCoverURLs.get(2),
-                new Response.Listener<Bitmap>() {
-                    @Override
-                    public void onResponse(Bitmap bitmap) {
-                        albumCoverImgView.setImageBitmap(bitmap);
-                    }
-                }, 0, 0, null,
-                new Response.ErrorListener() {
-                    public void onErrorResponse(VolleyError error) {
+        NetworkImageView mNetworkImageView;
+        ImageLoader mImageLoader;
 
-                    }
-                });
-        // Access the RequestQueue through your singleton class.
-        RequestQueue.getInstance(mContext).addToRequestQueue(request);;
+        // Get the NetworkImageView that will display the image.
+        mNetworkImageView =(NetworkImageView) rowView.findViewById(R.id.albumCoverImgView);
+        // Get the ImageLoader through your singleton class.
+        mImageLoader = RequestQueue.getInstance(mContext).getImageLoader();
+        // Set the URL of the image that should be loaded into this view, and
+        // specify the ImageLoader that will be used to make the request.
+        mNetworkImageView.setImageUrl(song.albumCoverURLs.get(0), mImageLoader);
 
 
         return rowView;
