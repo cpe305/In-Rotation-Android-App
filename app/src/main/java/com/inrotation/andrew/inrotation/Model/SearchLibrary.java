@@ -46,10 +46,10 @@ public class SearchLibrary {
                                 returnArray.add(trackObject);
 
                             }
-
+                        } catch (MyJSONException e) {
+                            Log.d("Error", e.toString());
                         } catch (JSONException e) {
-                            e.printStackTrace();
-                            throw new RuntimeException("context");
+                            Log.d("Error", e.toString());
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -97,7 +97,7 @@ public class SearchLibrary {
         return trackSearchURL.toString();
     }
 
-    protected static Song createSongOf(JSONObject jsonTrack) {
+    protected static Song createSongOf(JSONObject jsonTrack) throws MyJSONException {
         Song newSong = null;
 
         try {
@@ -116,8 +116,8 @@ public class SearchLibrary {
             return newSong;
         }
         catch (JSONException e) {
-            e.printStackTrace();
-            throw new RuntimeException("context");
+            Log.d("Error", e.toString());
+            throw new MyJSONException("Something went wrong");
         }
 
     }

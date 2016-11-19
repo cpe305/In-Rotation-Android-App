@@ -32,7 +32,7 @@ public class SpotifyProfileBuilder {
     public SpotifyProfileBuilder() {
     }
 
-    public User buildSpotifyProfile(JSONObject response) {
+    public User buildSpotifyProfile(JSONObject response) throws MyJSONException {
 
         SpotifyAccess spotifyAccessInstance = SpotifyAccess.getInstance();
 
@@ -47,7 +47,7 @@ public class SpotifyProfileBuilder {
             spotifyAccessInstance.setSpotifyUser(newUser);
         }
         catch (JSONException e) {
-
+            throw new MyJSONException("Something went wrong");
         }
 
         return newUser;

@@ -11,6 +11,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.Map;
@@ -36,12 +37,11 @@ public class HttpRequestMaker {
                         JSONObject tempResponse;
                         try {
 
-                            tempResponse = response;
-                            /*JSONArray profilePic = response.getJSONArray("images");
+                            JSONArray profilePic = response.getJSONArray("images");
                             String userName = response.getString("display_name");
                             JSONObject profilePicObject = profilePic.getJSONObject(0);
                             String profilePicURL = profilePicObject.getString("url");
-                            Log.d("Profile Pic", profilePicURL);*/
+                            Log.d("Profile Pic", profilePicURL);
                             //loadUserNameView(userName);
                             //loadProfilePic(profilePicURL);
 
