@@ -12,12 +12,18 @@ public class HostUser extends User {
     private String spotifyAccessToken;
     private String profilePicURL;
     private ArrayList<Playlist> playlistCollection;
+    private Playlist activePlaylist;
+    private String email;
+    private String dbPassword;
 
-    public HostUser(String name, String spotifyAccessToken, String profilePicURL)
+    public HostUser(String name, String spotifyAccessToken, String profilePicURL, String email, String dbPassword)
     {
         this.name = name;
         this.spotifyAccessToken = spotifyAccessToken;
         this.profilePicURL = profilePicURL;
+        this.playlistCollection = new ArrayList<>();
+        this.email = email;
+        this.dbPassword = dbPassword;
     }
 
     public String getSpotifyAccessToken() {
@@ -32,4 +38,21 @@ public class HostUser extends User {
         return name;
     }
 
+    public void setActivePlaylist(Playlist newActivePlaylist) {
+        this.activePlaylist = newActivePlaylist;
+        playlistCollection.add(newActivePlaylist);
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+
+    public String getDbPassword() {
+        return dbPassword;
+    }
+
+    public void setDbPassword(String dbPassword) {
+        this.dbPassword = dbPassword;
+    }
 }

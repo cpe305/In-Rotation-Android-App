@@ -31,7 +31,7 @@ public class Authenticator {
         AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,
                 AuthenticationResponse.Type.TOKEN,
                 REDIRECT_URI);
-        builder.setScopes(new String[]{"user-read-private", "streaming"});
+        builder.setScopes(new String[]{"user-read-private", "user-read-birthdate", "user-read-email", "streaming"});
         AuthenticationRequest request = builder.build();
 
         return request;

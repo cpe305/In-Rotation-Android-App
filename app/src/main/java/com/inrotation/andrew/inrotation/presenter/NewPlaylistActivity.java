@@ -34,9 +34,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.inrotation.andrew.inrotation.model.NewPlaylistCreator;
+import com.inrotation.andrew.inrotation.model.Playlist;
 import com.inrotation.andrew.inrotation.model.SearchLibrary;
 import com.inrotation.andrew.inrotation.model.Song;
 import com.inrotation.andrew.inrotation.R;
+import com.inrotation.andrew.inrotation.model.SpotifyAccess;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,6 +60,8 @@ public class NewPlaylistActivity extends AppCompatActivity {
 
     private static final String SPOTIFY_SEARCH_URL_STANDARD = "https://api.spotify.com/v1/search?q=";
     private ListView mListView;
+    private Playlist createdPlaylist;
+    private NewPlaylistCreator playlistCreator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,9 @@ public class NewPlaylistActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
 
         getSupportActionBar().setTitle("New Playlist");
+
+        playlistCreator = new NewPlaylistCreator();
+        playlistCreator.setPlaylistName(getSupportActionBar().getTitle().toString());
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -163,8 +171,15 @@ public class NewPlaylistActivity extends AppCompatActivity {
 
 
     protected void startActivePlaylist(Song selectedSong) {
+
+        playlistCreator.setFirstPlaylistSong(selectedSong);
+        createdPlaylist = playlistCreator.createNewPlaylist();
+        SpotifyAccess accessInstance = SpotifyAccess.getInstance();
+        accessInstance.getSpotifyUser().setActivePlaylist(createdPlaylist);
+
         Intent i = new Intent();
         Bundle b = new Bundle();
+
         b.putSerializable("firstSong", selectedSong);
         b.putString("playlistName", getSupportActionBar().getTitle().toString());
         i.putExtras(b);
@@ -205,14 +220,17 @@ public class NewPlaylistActivity extends AppCompatActivity {
 
 
     protected void setPlaylistName(String newName) {
+
         if (!newName.isEmpty()) {
             getSupportActionBar().setTitle(newName);
+            playlistCreator.setPlaylistName(newName);
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference("message");
             mDatabase = FirebaseDatabase.getInstance().getReference();
 
             myRef.setValue("Hello, World!");
         }
+
 
     }
 

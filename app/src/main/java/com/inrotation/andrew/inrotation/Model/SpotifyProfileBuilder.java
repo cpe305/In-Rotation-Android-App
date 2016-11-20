@@ -32,19 +32,23 @@ public class SpotifyProfileBuilder {
     public SpotifyProfileBuilder() {
     }
 
-    public User buildSpotifyProfile(JSONObject response) throws MyJSONException {
+    public HostUser buildSpotifyProfile(JSONObject response) throws MyJSONException {
 
         SpotifyAccess spotifyAccessInstance = SpotifyAccess.getInstance();
 
-        User newUser = null;
+        HostUser newUser = null;
         try {
 
             JSONArray profilePic = response.getJSONArray("images");
             String userName = response.getString("display_name");
+            String profileEmail = response.getString("email");
+            String dbPassword = response.getString("birthdate");
             JSONObject profilePicObject = profilePic.getJSONObject(0);
             String profilePicURL = profilePicObject.getString("url");
-            newUser = new HostUser(userName, spotifyAccessInstance.getAccessToken(), profilePicURL);
+            newUser = new HostUser(userName, spotifyAccessInstance.getAccessToken(), profilePicURL, profileEmail, dbPassword);
+
             spotifyAccessInstance.setSpotifyUser(newUser);
+
         }
         catch (JSONException e) {
             throw new MyJSONException("Something went wrong");

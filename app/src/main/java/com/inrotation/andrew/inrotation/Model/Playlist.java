@@ -1,6 +1,7 @@
 package com.inrotation.andrew.inrotation.model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Playlist {
 
@@ -9,17 +10,23 @@ public class Playlist {
     public int songCount;
     public int playlistDuration;
 
-    private Song currentSong;
-    private ArrayList<Song> songList;
-    private Song nextSong;
-    private Song prevSong;
+    private PlaylistSongNode currentSong;
+    private Song firstSong;
+    private PlaylistSongNode songListHead;
 
-    public Playlist(String playlistName, HostUser owner, int songCount, int playlistDuration) {
+
+    public Playlist(String playlistName, HostUser owner, Song firstSong) {
         this.playlistName = playlistName;
         this.owner = owner;
-        this.songCount = songCount;
-        this.playlistDuration = playlistDuration;
+        this.firstSong = firstSong;
+
+        songListHead = new PlaylistSongNode(this.firstSong);
+        currentSong = songListHead;
+
     }
+
+
+
 
 
 

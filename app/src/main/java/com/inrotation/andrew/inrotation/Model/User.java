@@ -7,5 +7,4 @@ package com.inrotation.andrew.inrotation.model;
 public abstract class User {
 
     protected String name;
-
 }
