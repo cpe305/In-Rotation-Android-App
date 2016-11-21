@@ -10,9 +10,9 @@ public class Playlist {
     public int songCount;
     public int playlistDuration;
 
-    private PlaylistSongNode currentSong;
-    private Song firstSong;
-    private PlaylistSongNode songListHead;
+    public PlaylistSongNode currentSong;
+    public Song firstSong;
+    public PlaylistSongNode songListHead;
 
 
     public Playlist(String playlistName, HostUser owner, Song firstSong) {

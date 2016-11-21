@@ -34,6 +34,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.inrotation.andrew.inrotation.model.DatabaseModifier;
+import com.inrotation.andrew.inrotation.model.HostUser;
 import com.inrotation.andrew.inrotation.model.NewPlaylistCreator;
 import com.inrotation.andrew.inrotation.model.Playlist;
 import com.inrotation.andrew.inrotation.model.SearchLibrary;
@@ -46,6 +48,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -58,10 +61,10 @@ public class NewPlaylistActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-    private static final String SPOTIFY_SEARCH_URL_STANDARD = "https://api.spotify.com/v1/search?q=";
     private ListView mListView;
     private Playlist createdPlaylist;
     private NewPlaylistCreator playlistCreator;
+    private DatabaseModifier dbModifier;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,49 +79,12 @@ public class NewPlaylistActivity extends AppCompatActivity {
         playlistCreator = new NewPlaylistCreator();
         playlistCreator.setPlaylistName(getSupportActionBar().getTitle().toString());
 
-        mAuth = FirebaseAuth.getInstance();
-
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    Log.d("TAG", "onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
-                    // User is signed out
-                    Log.d("TAG", "onAuthStateChanged:signed_out");
-                }
-                // ...
-            }
-        };
-
-        mAuth.signInAnonymously()
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d("TAG", "signInAnonymously:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Log.w("TAG", "signInAnonymously", task.getException());
-                            Toast.makeText(NewPlaylistActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
-                        // ...
-                    }
-                });
     }
 
 
     @Override
     protected void onStart() {
         super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
-
     }
 
     @Override
@@ -132,9 +98,6 @@ public class NewPlaylistActivity extends AppCompatActivity {
     @Override
     public void onStop() {
         super.onStop();
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
     }
 
     protected void ExpectFirstSongPick() {
@@ -144,10 +107,11 @@ public class NewPlaylistActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    presentSongMatches(editTextName.getText().toString());
-
+                    String songSearches = editTextName.getText().toString();
+                    presentSongMatches(songSearches);
                     handled = true;
                 }
+
                 return handled;
             }
         });
@@ -176,6 +140,10 @@ public class NewPlaylistActivity extends AppCompatActivity {
         createdPlaylist = playlistCreator.createNewPlaylist();
         SpotifyAccess accessInstance = SpotifyAccess.getInstance();
         accessInstance.getSpotifyUser().setActivePlaylist(createdPlaylist);
+
+        dbModifier = new DatabaseModifier();
+        dbModifier.addPlaylist(createdPlaylist);
+
 
         Intent i = new Intent();
         Bundle b = new Bundle();
@@ -224,11 +192,7 @@ public class NewPlaylistActivity extends AppCompatActivity {
         if (!newName.isEmpty()) {
             getSupportActionBar().setTitle(newName);
             playlistCreator.setPlaylistName(newName);
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference myRef = database.getReference("message");
-            mDatabase = FirebaseDatabase.getInstance().getReference();
 
-            myRef.setValue("Hello, World!");
         }
 
 

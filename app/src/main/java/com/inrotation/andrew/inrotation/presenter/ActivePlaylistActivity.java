@@ -60,13 +60,25 @@ public class ActivePlaylistActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         populateSongListView();
-        SpotifyAccess spotifyAccessInstance = SpotifyAccess.getInstance();
-        mPlayer = spotifyAccessInstance.getSpotifyPlayer();
-        mPlayer.playUri(null, firstSong.songURI, 0, 0);
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        SpotifyAccess spotifyAccessInstance = SpotifyAccess.getInstance();
+        mPlayer = spotifyAccessInstance.getSpotifyPlayer();
+        if (!mPlayer.getPlaybackState().isPlaying) {
+            mPlayer.playUri(null, firstSong.songURI, 0, 0);
+        }
+
     }
+
+
 }

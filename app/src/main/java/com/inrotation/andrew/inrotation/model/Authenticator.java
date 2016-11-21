@@ -1,5 +1,13 @@
 package com.inrotation.andrew.inrotation.model;
 
+import android.support.annotation.NonNull;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.inrotation.andrew.inrotation.presenter.HomeScreenActivity;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
@@ -27,7 +35,7 @@ public class Authenticator {
     }
 
 
-    public AuthenticationRequest openAuthenticateRequest() {
+    public AuthenticationRequest openSpotifyAuthenticateRequest() {
         AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,
                 AuthenticationResponse.Type.TOKEN,
                 REDIRECT_URI);
@@ -36,6 +44,7 @@ public class Authenticator {
 
         return request;
     }
+
 
 
 

@@ -19,12 +19,17 @@ public class PlaylistTestSuite {
     @Test
     public void testPlaylist() throws Exception {
 
-        Playlist newPlaylist = new Playlist("Best Playlist", new HostUser("Andrew", "12345", "url/spotifyPic"), 3, 50000);
+        ArrayList<String> albumcovers = new ArrayList<>();
+        albumcovers.add("url1");
+        albumcovers.add("url2");
+        albumcovers.add("url3");
+
+        Playlist newPlaylist = new Playlist("Best Playlist", new HostUser("Andrew", "12345", "url/spotifyPic", "andrew@example.com", "1992-05-24"),
+                new Song("Blessings", "Chance The Rapper", "Coloring Book", 3000, albumcovers, "songURI", true));
 
 
         assertEquals(newPlaylist.playlistName, "Best Playlist");
         assertEquals(newPlaylist.owner.getUserName(), "Andrew");
-        assertEquals(newPlaylist.songCount, 3);
-        assertEquals(newPlaylist.playlistDuration, 50000);
+
     }
 }

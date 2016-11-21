@@ -19,8 +19,16 @@ public class NewPlaylistCreator {
         this.playlistName = name;
     }
 
+    public String getPlaylistName() {
+        return playlistName;
+    }
+
     public void setFirstPlaylistSong(Song song) {
         this.firstPlaylistSong = song;
+    }
+
+    public Song getFirstPlaylistSong() {
+        return firstPlaylistSong;
     }
 
     public Playlist createNewPlaylist() {

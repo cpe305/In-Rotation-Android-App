@@ -2,7 +2,6 @@ package com.inrotation.andrew.inrotation.presenter;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -12,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 
 import java.util.Map;
 
@@ -23,14 +21,11 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.android.volley.VolleyError;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -40,19 +35,16 @@ import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;*/
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.inrotation.andrew.inrotation.model.Authenticator;
+import com.inrotation.andrew.inrotation.model.DatabaseModifier;
 import com.inrotation.andrew.inrotation.model.HostUser;
 import com.inrotation.andrew.inrotation.model.RequestQueue;
 import com.inrotation.andrew.inrotation.model.SpotifyAccess;
 import com.inrotation.andrew.inrotation.R;
 import com.inrotation.andrew.inrotation.model.SpotifyProfileBuilder;
-import com.inrotation.andrew.inrotation.model.User;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
@@ -64,8 +56,6 @@ import com.spotify.sdk.android.player.PlayerEvent;
 import com.spotify.sdk.android.player.Spotify;
 import com.spotify.sdk.android.player.SpotifyPlayer;
 
-import static com.google.android.gms.R.id.url;
-
 public class HomeScreenActivity extends AppCompatActivity implements
         SpotifyPlayer.NotificationCallback, ConnectionStateCallback {
 
@@ -75,11 +65,10 @@ public class HomeScreenActivity extends AppCompatActivity implements
     private Player mPlayer;
     private String resAccessToken;
     private AuthenticationResponse authenRes;
-    private Authenticator spotifyAuthenticator;
+    private Authenticator userAuthenticator;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private DatabaseReference mDatabase;
 
     private static final int REQUEST_CODE = 1337;
 
@@ -94,7 +83,25 @@ public class HomeScreenActivity extends AppCompatActivity implements
 
         mAuth = FirebaseAuth.getInstance();
 
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d("TAG", "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.d("TAG", "onAuthStateChanged:signed_out");
+                }
+                // ...
+            }
+        };
+
         onAuthenticateClick();
+
+
 
         final FloatingActionButton newPlaylistButton = (FloatingActionButton) findViewById(R.id.CreatePlaylistActionButton);
         newPlaylistButton.setOnClickListener(new View.OnClickListener() {
@@ -107,8 +114,8 @@ public class HomeScreenActivity extends AppCompatActivity implements
 
 
     protected void onAuthenticateClick() {
-        spotifyAuthenticator = new Authenticator();
-        AuthenticationRequest request = spotifyAuthenticator.openAuthenticateRequest();
+        userAuthenticator = new Authenticator();
+        AuthenticationRequest request = userAuthenticator.openSpotifyAuthenticateRequest();
 
         AuthenticationClient.openLoginActivity(this, Authenticator.REQUEST_CODE, request);
     }
@@ -150,15 +157,15 @@ public class HomeScreenActivity extends AppCompatActivity implements
     @Override
     public void onStart() {
         super.onStart();
-        //mAuth.addAuthStateListener(mAuthListener);
+        mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-       /* if (mAuthListener != null) {
+        if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
-        }*/
+        }
     }
 
     @Override
@@ -210,12 +217,14 @@ public class HomeScreenActivity extends AppCompatActivity implements
 
 
                             SpotifyProfileBuilder profileBuilder = new SpotifyProfileBuilder();
+                            DatabaseModifier dbModifier = new DatabaseModifier();
 
                             HostUser createdUser = profileBuilder.buildSpotifyProfile(response);
                             if (createdUser != null) {
                                 loadUserNameView(createdUser.getUserName());
                                 loadProfilePic(createdUser.getProfilePicURL());
-                                //processFirebaseLogin();
+                                processFirebaseLogin();
+                                dbModifier.addUserToDatabase(createdUser);
                             }
                             else {
                                 new AlertDialog.Builder(HomeScreenActivity.this)
@@ -259,63 +268,48 @@ public class HomeScreenActivity extends AppCompatActivity implements
     }
 
     public void processFirebaseLogin() {
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    Log.d("TAG", "onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
-                    // User is signed out
-                    Log.d("TAG", "onAuthStateChanged:signed_out");
-                }
-                // ...
-            }
-        };
 
         SpotifyAccess accessInstance = SpotifyAccess.getInstance();
         String email = accessInstance.getSpotifyUser().getEmail();
         String password = accessInstance.getSpotifyUser().getDbPassword();
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+       // mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        if (mDatabase.endAt(email) == null) {
+        //if (mDatabase.endAt(email) == null) {
 
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            Log.d("TAG", "createUserWithEmail:onComplete:" + task.isSuccessful());
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d("TAG", "createUserWithEmail:onComplete:" + task.isSuccessful());
 
-                            // If sign in fails, display a message to the user. If sign in succeeds
-                            // the auth state listener will be notified and logic to handle the
-                            // signed in user can be handled in the listener.
-                            if (!task.isSuccessful()) {
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
 
-                            }
+                    }
+                });
+        //}
 
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d("TAG", "signInWithEmail:onComplete:" + task.isSuccessful());
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Log.w("TAG", "signInWithEmail:failed", task.getException());
+                            Toast.makeText(HomeScreenActivity.this, "Failed firebase authentication",
+                                    Toast.LENGTH_SHORT).show();
                         }
-                    });
-        }
-        else {
-            mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            Log.d("TAG", "signInWithEmail:onComplete:" + task.isSuccessful());
 
-                            // If sign in fails, display a message to the user. If sign in succeeds
-                            // the auth state listener will be notified and logic to handle the
-                            // signed in user can be handled in the listener.
-                            if (!task.isSuccessful()) {
+                        // ...
+                    }
+                });
 
-                            }
-
-                            // ...
-                        }
-                    });
-        }
     }
 
 
