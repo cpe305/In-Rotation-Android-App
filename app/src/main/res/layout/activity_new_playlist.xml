@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_home_screen"
-    android:screenOrientation="portrait"
     tools:context="com.inrotation.andrew.inrotation.presenter.NewPlaylistActivity">
 
 

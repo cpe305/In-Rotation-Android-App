@@ -33,8 +33,11 @@ public class DatabaseModifier {
         DatabaseReference ref = database.getReference("server/saving-data");
         DatabaseReference playRef = ref.child("playlists");
 
+
         Map<String, Playlist> playlist = new HashMap<>();
-        playlist.put(String.valueOf(createdPlaylist.hashCode()), createdPlaylist);
+        playlist.put("0001", createdPlaylist);
+
+        //playlist.put(String.valueOf(createdPlaylist.hashCode()), createdPlaylist);
         playRef.setValue(playlist);
     }
 }

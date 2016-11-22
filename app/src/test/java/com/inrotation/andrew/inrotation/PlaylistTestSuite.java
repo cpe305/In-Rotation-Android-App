@@ -24,12 +24,12 @@ public class PlaylistTestSuite {
         albumcovers.add("url2");
         albumcovers.add("url3");
 
-        Playlist newPlaylist = new Playlist("Best Playlist", new HostUser("Andrew", "12345", "url/spotifyPic", "andrew@example.com", "1992-05-24"),
+        Playlist newPlaylist = new Playlist("Best Playlist", "Andrew",
                 new Song("Blessings", "Chance The Rapper", "Coloring Book", 3000, albumcovers, "songURI", true));
 
 
         assertEquals(newPlaylist.playlistName, "Best Playlist");
-        assertEquals(newPlaylist.owner.getUserName(), "Andrew");
+        assertEquals(newPlaylist.owner, "Andrew");
 
     }
 }

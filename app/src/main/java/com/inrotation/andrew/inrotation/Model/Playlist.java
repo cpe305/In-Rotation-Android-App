@@ -6,16 +6,19 @@ import java.util.LinkedList;
 public class Playlist {
 
     public String playlistName;
-    public HostUser owner;
-    public int songCount;
-    public int playlistDuration;
+    public String owner;
+    //public int songCount;
+    //public int playlistDuration;
 
-    public PlaylistSongNode currentSong;
-    public Song firstSong;
-    public PlaylistSongNode songListHead;
+    private PlaylistSongNode currentSong;
+    private Song firstSong;
+    private PlaylistSongNode songListHead;
 
+    public Playlist() {
+        //
+    }
 
-    public Playlist(String playlistName, HostUser owner, Song firstSong) {
+    public Playlist(String playlistName, String owner, Song firstSong) {
         this.playlistName = playlistName;
         this.owner = owner;
         this.firstSong = firstSong;
@@ -26,12 +29,30 @@ public class Playlist {
     }
 
 
+    public PlaylistSongNode getCurrentSong() {
+        return currentSong;
+    }
+
+    public void setCurrentSong(PlaylistSongNode currentSong) {
+        this.currentSong = currentSong;
+    }
+
+    public String getPlaylistName() {
+        return playlistName;
+    }
+
+    public Song getFirstSong() {
+        return firstSong;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
 
 
-
-
-
-
+    public PlaylistSongNode getSongListHead() {
+        return songListHead;
+    }
 
 
 

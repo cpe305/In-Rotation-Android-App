@@ -76,6 +76,10 @@ public class SearchListAdapter extends BaseAdapter {
     }
 
 
+    public void setmDataSource(ArrayList<Song> mDataSource) {
+        this.mDataSource = mDataSource;
+    }
+
     @Override
     public Object getItem(int position) {
         return mDataSource.get(position);

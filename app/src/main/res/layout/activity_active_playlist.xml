@@ -5,7 +5,6 @@
     android:id="@+id/activity_active_playlist"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:screenOrientation="portrait"
     tools:context="com.inrotation.andrew.inrotation.presenter.ActivePlaylistActivity">
 
     <android.support.v7.widget.Toolbar

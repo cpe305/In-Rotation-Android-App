@@ -28,43 +28,43 @@ public class HostUser extends User {
         this.dbPassword = dbPassword;
     }
 
-    @Exclude
+
     public String getSpotifyAccessToken() {
         return spotifyAccessToken;
     }
 
-    @Exclude
+
     public String getProfilePicURL() {
         return profilePicURL;
     }
 
-    @Exclude
+
     public String getUserName() {
         return name;
     }
 
-    @Exclude
+
     public void setActivePlaylist(Playlist newActivePlaylist) {
         this.activePlaylist = newActivePlaylist;
         playlistCollection.add(newActivePlaylist);
     }
 
-    @Exclude
+
     public String getEmail() {
         return email;
     }
 
-    @Exclude
+
     public String getDbPassword() {
         return dbPassword;
     }
 
-    @Exclude
+
     public void setDbPassword(String dbPassword) {
         this.dbPassword = dbPassword;
     }
 
-    @Exclude
+
     public Playlist getActivePlaylist() {
         return activePlaylist;
     }
