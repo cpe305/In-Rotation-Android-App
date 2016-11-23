@@ -281,11 +281,15 @@ public class HomeScreenActivity extends AppCompatActivity implements
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d("TAG", "createUserWithEmail:onComplete:" + task.isSuccessful());
-                        DatabaseModifier dbModifier = new DatabaseModifier();
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        dbModifier.addUserToDatabase(createdUser);
+
+                        if (task.isSuccessful()) {
+                            DatabaseModifier dbModifier = new DatabaseModifier();
+                            // If sign in fails, display a message to the user. If sign in succeeds
+                            // the auth state listener will be notified and logic to handle the
+                            // signed in user can be handled in the listener.
+
+                            dbModifier.addUserToDatabase(createdUser);
+                        }
                     }
                 });
         //}
