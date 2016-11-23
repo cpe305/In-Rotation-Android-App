@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ListView;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,14 +36,13 @@ public class ActivePlaylistActivity extends AppCompatActivity {
 
         songList = new ArrayList<>();
         Bundle b = this.getIntent().getExtras();
-
+        /*
         if (b != null) {
             firstSong = (Song) b.get("firstSong");
             songList.add(firstSong);
             playlistName = b.getString("playlistName");
         }
-
-
+        */
 
         setContentView(R.layout.activity_active_playlist);
 
@@ -51,16 +51,46 @@ public class ActivePlaylistActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle(playlistName);
 
-        SpotifyAccess spotifyAccessInstance = SpotifyAccess.getInstance();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("server/saving-data/playlists/0001/songArrayList");
+        // Attach a listener to read the data at our posts reference
+        ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                Song post = dataSnapshot.getValue(Song.class);
+                songList.add(post);
+                populateSongListView();
+                adapter.setmDataSource(songList);
+                mListView.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+        });
+
+
+        /*SpotifyAccess spotifyAccessInstance = SpotifyAccess.getInstance();
         mPlayer = spotifyAccessInstance.getSpotifyPlayer();
-        mPlayer.playUri(null, firstSong.songURI, 0, 0);
+        mPlayer.playUri(null, firstSong.songURI, 0, 0);*/
     }
 
     protected void populateSongListView() {
+
         mListView = (ListView) findViewById(R.id.songListView);
 
         adapter = new SearchListAdapter(this, songList);
-        Log.d("SongMatches", songList.toString());
         mListView.setAdapter(adapter);
     }
 
@@ -80,31 +110,26 @@ public class ActivePlaylistActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // Get a reference to our posts
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("server/saving-data/playlists/0001/currentSong/next");
-// Attach a listener to read the data at our posts reference
-        ref.addValueEventListener(new ValueEventListener() {
+        DatabaseReference ref = database.getReference("server/saving-data/playlists/0001/songArrayList/");
+
+        ref.child("0").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Song post = dataSnapshot.getValue(Song.class);
-                songList.add(post);
-                adapter.setmDataSource(songList);
-                mListView.setAdapter(adapter);
+            public void onDataChange(DataSnapshot snapshot) {
+                Song post = snapshot.getValue(Song.class);
+                SpotifyAccess spotifyAccessInstance = SpotifyAccess.getInstance();
+                mPlayer = spotifyAccessInstance.getSpotifyPlayer();
+                if (!mPlayer.getPlaybackState().isPlaying) {
+                    mPlayer.playUri(null, post.songURI, 0, 0);
+                }
 
             }
-
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
+            public void onCancelled(DatabaseError arg0) {
+                System.out.println("The read failed: " + arg0.getCode());
             }
         });
 
-        SpotifyAccess spotifyAccessInstance = SpotifyAccess.getInstance();
-        mPlayer = spotifyAccessInstance.getSpotifyPlayer();
-        if (!mPlayer.getPlaybackState().isPlaying) {
-            mPlayer.playUri(null, firstSong.songURI, 0, 0);
-        }
 
     }
 

@@ -10,9 +10,11 @@ public class Playlist {
     //public int songCount;
     //public int playlistDuration;
 
-    private PlaylistSongNode currentSong;
+    private int firstSongIndex;
+    private ArrayList<Song> songArrayList;
+    /*private PlaylistSongNode currentSong;
     private Song firstSong;
-    private PlaylistSongNode songListHead;
+    private PlaylistSongNode songListHead;*/
 
     public Playlist() {
         //
@@ -21,14 +23,28 @@ public class Playlist {
     public Playlist(String playlistName, String owner, Song firstSong) {
         this.playlistName = playlistName;
         this.owner = owner;
-        this.firstSong = firstSong;
-
-        songListHead = new PlaylistSongNode(this.firstSong);
-        currentSong = songListHead;
+        this.songArrayList = new ArrayList<>();
+        this.firstSongIndex = 0;
+        songArrayList.add(firstSong);
 
     }
 
+    public int getFirstSongIndex() {
+        return firstSongIndex;
+    }
 
+    public void setFirstSongIndex(int firstSongIndex) {
+        this.firstSongIndex = firstSongIndex;
+    }
+
+    public ArrayList<Song> getSongArrayList() {
+        return songArrayList;
+    }
+
+    public void setSongArrayList(ArrayList<Song> songArrayList) {
+        this.songArrayList = songArrayList;
+    }
+    /*
     public PlaylistSongNode getCurrentSong() {
         return currentSong;
     }
@@ -52,7 +68,7 @@ public class Playlist {
 
     public PlaylistSongNode getSongListHead() {
         return songListHead;
-    }
+    }*/
 
 
 

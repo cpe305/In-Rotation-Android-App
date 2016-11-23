@@ -40,7 +40,7 @@ public class NewPlaylistCreator {
         albumCovers.add("https://i.scdn.co/image/25c94ed54d2cd65ff9ad182f6a72c62f5e657fbe");
         albumCovers.add("https://i.scdn.co/image/6a18417aa31ba778a28bc0edc48addbf87a7dd9f");
         albumCovers.add("https://i.scdn.co/image/627825639a712adac59443465bd8bc6400238060");
-        returnPlaylist.getSongListHead().setNext(new Song("Night Riders", "Major Lazer", "Peace Is The Mission", 3000, albumCovers, "spotify:track:2SKwCzTG3flzBqYQhGWj8J", true));
+        returnPlaylist.getSongArrayList().add(new Song("Night Riders", "Major Lazer", "Peace Is The Mission", 3000, albumCovers, "spotify:track:2SKwCzTG3flzBqYQhGWj8J", true));
         return returnPlaylist;
     }
 }

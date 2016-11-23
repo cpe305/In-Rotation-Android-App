@@ -103,13 +103,13 @@ public class HomeScreenActivity extends AppCompatActivity implements
 
 
 
-        final FloatingActionButton newPlaylistButton = (FloatingActionButton) findViewById(R.id.CreatePlaylistActionButton);
+        /*final FloatingActionButton newPlaylistButton = (FloatingActionButton) findViewById(R.id.CreatePlaylistActionButton);
         newPlaylistButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent newPlaylistIntent = new Intent(v.getContext(), NewPlaylistActivity.class);
                 startActivity(newPlaylistIntent);
             }
-        });
+        });*/
     }
 
 
@@ -223,8 +223,7 @@ public class HomeScreenActivity extends AppCompatActivity implements
                             if (createdUser != null) {
                                 loadUserNameView(createdUser.getUserName());
                                 loadProfilePic(createdUser.getProfilePicURL());
-                                processFirebaseLogin();
-                                dbModifier.addUserToDatabase(createdUser);
+                                processFirebaseLogin(createdUser);
                             }
                             else {
                                 new AlertDialog.Builder(HomeScreenActivity.this)
@@ -267,7 +266,7 @@ public class HomeScreenActivity extends AppCompatActivity implements
         queue.add(arrayRequest);
     }
 
-    public void processFirebaseLogin() {
+    public void processFirebaseLogin(final HostUser createdUser) {
 
         SpotifyAccess accessInstance = SpotifyAccess.getInstance();
         String email = accessInstance.getSpotifyUser().getEmail();
@@ -282,11 +281,11 @@ public class HomeScreenActivity extends AppCompatActivity implements
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d("TAG", "createUserWithEmail:onComplete:" + task.isSuccessful());
-
+                        DatabaseModifier dbModifier = new DatabaseModifier();
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
-
+                        dbModifier.addUserToDatabase(createdUser);
                     }
                 });
         //}
@@ -309,6 +308,15 @@ public class HomeScreenActivity extends AppCompatActivity implements
                         // ...
                     }
                 });
+
+
+        final FloatingActionButton newPlaylistButton = (FloatingActionButton) findViewById(R.id.CreatePlaylistActionButton);
+        newPlaylistButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent newPlaylistIntent = new Intent(v.getContext(), NewPlaylistActivity.class);
+                startActivity(newPlaylistIntent);
+            }
+        });
 
     }
 
