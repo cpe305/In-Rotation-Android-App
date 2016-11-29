@@ -1,5 +1,7 @@
 package com.inrotation.andrew.inrotation.model;
 
+import android.util.Log;
+
 import com.google.android.gms.location.places.PlaceReport;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,8 +32,9 @@ public class DatabaseModifier {
             public void onDataChange(DataSnapshot snapshot) {
                 if (snapshot.getValue() == null) {
                     if (snapshot.getValue() != createdUser.getEmail()) {
-                        DatabaseReference usersRef = ref.push();
-                        usersRef.setValue(createdUser);
+                        DatabaseReference userRef = database.getReference("server/saving-data/users");
+                        DatabaseReference placeUserRef = userRef.push();
+                        placeUserRef.setValue(createdUser);
                     }
                 }
             }
@@ -53,12 +56,15 @@ public class DatabaseModifier {
     public void addPlaylist(Playlist createdPlaylist) {
         DatabaseReference ref = database.getReference("server/saving-data");
         DatabaseReference playRef = ref.child("playlists");
-
+        //DatabaseReference playlistsRef = ref.push();
+        //playlistsRef.setValue(createdPlaylist);
 
         Map<String, Playlist> playlist = new HashMap<>();
-        playlist.put("0001", createdPlaylist);
+        String[] key = createdPlaylist.owner.split("@");
+        playlist.put(key[0], createdPlaylist);
 
         //playlist.put(String.valueOf(createdPlaylist.hashCode()), createdPlaylist);
         playRef.setValue(playlist);
     }
+
 }

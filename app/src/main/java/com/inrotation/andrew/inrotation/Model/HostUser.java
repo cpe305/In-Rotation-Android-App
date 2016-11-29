@@ -18,6 +18,7 @@ public class HostUser extends User {
     private String email;
     private String dbPassword;
     private String key;
+    private String playlistToken;
 
     public HostUser(String name, String spotifyAccessToken, String profilePicURL, String email, String dbPassword)
     {
@@ -76,5 +77,13 @@ public class HostUser extends User {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getPlaylistToken() {
+        return playlistToken;
+    }
+
+    public void setPlaylistToken(String playlistToken) {
+        this.playlistToken = playlistToken;
     }
 }

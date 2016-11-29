@@ -11,7 +11,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Logger;
 import com.google.firebase.database.ValueEventListener;
+import com.inrotation.andrew.inrotation.model.DatabaseModifier;
 import com.inrotation.andrew.inrotation.model.Playlist;
 import com.inrotation.andrew.inrotation.model.SearchLibrary;
 import com.inrotation.andrew.inrotation.model.Song;
@@ -25,10 +27,12 @@ public class ActivePlaylistActivity extends AppCompatActivity {
 
     protected Song firstSong;
     protected ArrayList<Song> songList;
-    protected String playlistName;
+    //protected String playlistName;
     protected ListView mListView;
     protected Player mPlayer;
     protected SearchListAdapter adapter;
+
+    protected String playlistKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +53,14 @@ public class ActivePlaylistActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        getSupportActionBar().setTitle(playlistName);
+        SpotifyAccess spotifyAccess = SpotifyAccess.getInstance();
+        playlistKey = spotifyAccess.getSpotifyUser().getPlaylistToken();
+        setPlaylistName(playlistKey, myToolbar);
+
+        //getSupportActionBar().setTitle(builder.toString());
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("server/saving-data/playlists/0001/songArrayList");
+        DatabaseReference ref = database.getReference("server/saving-data/playlists/"+playlistKey+"/songArrayList");
         // Attach a listener to read the data at our posts reference
         ref.addChildEventListener(new ChildEventListener() {
             @Override
@@ -94,6 +102,27 @@ public class ActivePlaylistActivity extends AppCompatActivity {
         mListView.setAdapter(adapter);
     }
 
+    public void setPlaylistName(String code, final Toolbar mytoolbar) {
+        //final StringBuilder playlistName = new StringBuilder();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("server/saving-data/playlists/" + code);
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Playlist post = dataSnapshot.getValue(Playlist.class);
+                getSupportActionBar().setTitle(post.playlistName);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // ...
+            }
+
+        });
+
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -111,16 +140,16 @@ public class ActivePlaylistActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("server/saving-data/playlists/0001/songArrayList/");
+        DatabaseReference ref = database.getReference("server/saving-data/playlists/");
 
-        ref.child("0").addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.child(playlistKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                Song post = snapshot.getValue(Song.class);
+                Playlist post = snapshot.getValue(Playlist.class);
                 SpotifyAccess spotifyAccessInstance = SpotifyAccess.getInstance();
                 mPlayer = spotifyAccessInstance.getSpotifyPlayer();
                 if (!mPlayer.getPlaybackState().isPlaying) {
-                    mPlayer.playUri(null, post.songURI, 0, 0);
+                    mPlayer.playUri(null, post.getSongArrayList().get(0).songURI, 0, 0);
                 }
 
             }

@@ -2,6 +2,7 @@ package com.inrotation.andrew.inrotation.presenter;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -14,6 +15,7 @@ import android.view.View;
 
 import java.util.Map;
 
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,6 +82,11 @@ public class HomeScreenActivity extends AppCompatActivity implements
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("My Home");
+
+
+        Drawable d = getResources().getDrawable(android.R.drawable.ic_media_previous);
+        ImageButton play = (ImageButton) findViewById(R.id.rewindButton);
+        play.setImageDrawable(d);
 
         mAuth = FirebaseAuth.getInstance();
 

@@ -35,7 +35,7 @@ public class NewPlaylistCreator {
 
     public Playlist createNewPlaylist() {
         SpotifyAccess accessInstance = SpotifyAccess.getInstance();
-        Playlist returnPlaylist = new Playlist(playlistName, accessInstance.getSpotifyUser().getUserName(), firstPlaylistSong);
+        Playlist returnPlaylist = new Playlist(playlistName, accessInstance.getSpotifyUser().getEmail(), firstPlaylistSong);
         ArrayList<String> albumCovers = new ArrayList<>();
         albumCovers.add("https://i.scdn.co/image/25c94ed54d2cd65ff9ad182f6a72c62f5e657fbe");
         albumCovers.add("https://i.scdn.co/image/6a18417aa31ba778a28bc0edc48addbf87a7dd9f");

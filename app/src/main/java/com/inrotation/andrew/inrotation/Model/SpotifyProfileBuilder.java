@@ -46,8 +46,9 @@ public class SpotifyProfileBuilder {
             JSONObject profilePicObject = profilePic.getJSONObject(0);
             String profilePicURL = profilePicObject.getString("url");
             newUser = new HostUser(userName, spotifyAccessInstance.getAccessToken(), profilePicURL, profileEmail, dbPassword);
-
+            newUser.setPlaylistToken(profileEmail.split("@")[0]);
             spotifyAccessInstance.setSpotifyUser(newUser);
+
 
         }
         catch (JSONException e) {
