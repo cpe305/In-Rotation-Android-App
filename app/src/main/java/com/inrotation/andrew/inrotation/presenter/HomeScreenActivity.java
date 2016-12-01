@@ -43,6 +43,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.inrotation.andrew.inrotation.model.Authenticator;
 import com.inrotation.andrew.inrotation.model.DatabaseModifier;
 import com.inrotation.andrew.inrotation.model.HostUser;
+import com.inrotation.andrew.inrotation.model.PlaylistManager;
 import com.inrotation.andrew.inrotation.model.RequestQueue;
 import com.inrotation.andrew.inrotation.model.SpotifyAccess;
 import com.inrotation.andrew.inrotation.R;
@@ -68,6 +69,7 @@ public class HomeScreenActivity extends AppCompatActivity implements
     private String resAccessToken;
     private AuthenticationResponse authenRes;
     private Authenticator userAuthenticator;
+    private PlaylistManager playlistManager;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -83,14 +85,7 @@ public class HomeScreenActivity extends AppCompatActivity implements
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("My Home");
 
-
-        Drawable d = getResources().getDrawable(android.R.drawable.ic_media_previous);
-        ImageButton play = (ImageButton) findViewById(R.id.rewindButton);
-        play.setImageDrawable(d);
-
         mAuth = FirebaseAuth.getInstance();
-
-
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -109,14 +104,28 @@ public class HomeScreenActivity extends AppCompatActivity implements
         onAuthenticateClick();
 
 
-
-        /*final FloatingActionButton newPlaylistButton = (FloatingActionButton) findViewById(R.id.CreatePlaylistActionButton);
-        newPlaylistButton.setOnClickListener(new View.OnClickListener() {
+        playlistManager = new PlaylistManager();
+        final ImageButton playButton = (ImageButton) findViewById(R.id.playButton);
+        playButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent newPlaylistIntent = new Intent(v.getContext(), NewPlaylistActivity.class);
-                startActivity(newPlaylistIntent);
+                playlistManager.onPlayButtonClicked(playButton);
             }
-        });*/
+        });
+
+        final ImageButton rewindButton = (ImageButton) findViewById(R.id.rewindButton);
+        rewindButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                playlistManager.onPreviousButtonClicked(playButton);
+            }
+        });
+
+        final ImageButton fastForwardButton = (ImageButton) findViewById(R.id.fastforwardButton);
+        fastForwardButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                playlistManager.onNextButtonClicked(playButton);
+            }
+        });
+
     }
 
 
@@ -173,6 +182,13 @@ public class HomeScreenActivity extends AppCompatActivity implements
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onStart();
+        ViewRefresher.refreshPlayerBar(this, this);
+
     }
 
     @Override

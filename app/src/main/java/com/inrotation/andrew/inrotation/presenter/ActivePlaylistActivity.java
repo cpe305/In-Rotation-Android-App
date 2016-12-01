@@ -149,7 +149,11 @@ public class ActivePlaylistActivity extends AppCompatActivity {
                 SpotifyAccess spotifyAccessInstance = SpotifyAccess.getInstance();
                 mPlayer = spotifyAccessInstance.getSpotifyPlayer();
                 if (!mPlayer.getPlaybackState().isPlaying) {
+                    spotifyAccessInstance.setCurrentSong(post.getSongArrayList().get(0));
                     mPlayer.playUri(null, post.getSongArrayList().get(0).songURI, 0, 0);
+                    /**
+                     * Add code to change play button to pause button!!!!!!!!!!!!!
+                     */
                 }
 
             }
@@ -158,6 +162,7 @@ public class ActivePlaylistActivity extends AppCompatActivity {
                 System.out.println("The read failed: " + arg0.getCode());
             }
         });
+
 
 
     }

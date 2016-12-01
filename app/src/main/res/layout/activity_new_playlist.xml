@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
         android:layout_marginTop="30dp"
-        android:id="@+id/textView2"
+        android:id="@+id/textViewExplaination"
         android:textAppearance="@android:style/TextAppearance.Material.Medium.Inverse"
         android:fontFamily="sans-serif-smallcaps"
         android:textSize="24sp"
@@ -37,9 +37,9 @@
         android:layout_width="255dp"
         android:layout_height="wrap_content"
         android:hint="Name"
-        android:layout_below="@+id/textView2"
-        android:layout_alignStart="@+id/textView2"
-        android:id="@+id/editPlaylistName"
+        android:layout_below="@+id/textViewExplaination"
+        android:layout_alignStart="@+id/textViewExplaination"
+        android:id="@+id/searchPlaylistCode"
         android:inputType="text"
         android:imeOptions="actionDone"
         android:layout_toStartOf="@+id/button" />
@@ -55,8 +55,8 @@
         android:textSize="24sp"
         android:textColor="@color/colorPrimary"
         android:textStyle="normal|bold"
-        android:layout_below="@+id/editPlaylistName"
-        android:layout_alignStart="@+id/editPlaylistName" />
+        android:layout_below="@+id/searchPlaylistCode"
+        android:layout_alignStart="@+id/searchPlaylistCode" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -69,7 +69,7 @@
         android:hint="Song Name"
         android:imeOptions="actionSearch"
         android:layout_toStartOf="@+id/button2"
-        android:layout_alignEnd="@+id/editPlaylistName" />
+        android:layout_alignEnd="@+id/searchPlaylistCode" />
 
     <Button
         android:text="Done"
@@ -78,8 +78,8 @@
         style="@android:style/Widget.Material.Button.Colored"
         android:elevation="11dp"
         android:id="@+id/PlaylistNameDoneButton"
-        android:layout_alignBaseline="@+id/editPlaylistName"
-        android:layout_alignBottom="@+id/editPlaylistName"
+        android:layout_alignBaseline="@+id/searchPlaylistCode"
+        android:layout_alignBottom="@+id/searchPlaylistCode"
         android:layout_alignStart="@+id/button2" />
 
     <Button

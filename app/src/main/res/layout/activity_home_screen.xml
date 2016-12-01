@@ -88,12 +88,11 @@
         android:layout_below="@+id/CreatePlaylistActionButton">
 
         <com.android.volley.toolbox.NetworkImageView
-            android:id="@+id/albumCoverImgView"
+            android:id="@+id/playerBarCoverView"
             android:contentDescription="Album Cover"
-            android:layout_weight="0.18"
             android:layout_marginLeft="30dp"
-            android:layout_width="64dp"
-            android:layout_height="64dp" />
+            android:layout_width="56dp"
+            android:layout_height="56dp" />
 
         <ImageButton
             android:id="@+id/rewindButton"
@@ -132,6 +131,7 @@
 
     </LinearLayout>
 
+
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -145,5 +145,17 @@
         app:backgroundTint="@color/colorAccent"
         android:layout_above="@+id/actionbarT"
         android:layout_alignParentEnd="true" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="@android:dimen/thumbnail_height"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/ic_menu_directions"
+        android:id="@+id/JoinPlaylistActionButton"
+        app:elevation="5dp"
+        android:layout_above="@+id/CreatePlaylistActionButton"
+        android:layout_alignStart="@+id/CreatePlaylistActionButton"
+        android:layout_marginBottom="22dp" />
 
 </RelativeLayout>

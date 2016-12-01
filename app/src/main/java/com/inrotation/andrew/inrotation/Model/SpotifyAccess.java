@@ -13,11 +13,13 @@ public class SpotifyAccess {
     private String clientId;
     private Player spotifyPlayer;
     private HostUser spotifyUser;
+    private Song currentSong;
 
 
     private SpotifyAccess() {
         this.accessToken = "";
         this.clientId = "";
+        this.currentSong = null;
     }
 
     public static synchronized SpotifyAccess getInstance() {
@@ -57,5 +59,13 @@ public class SpotifyAccess {
 
     public void setSpotifyUser(HostUser spotifyUser) {
         this.spotifyUser = spotifyUser;
+    }
+
+    public Song getCurrentSong() {
+        return currentSong;
+    }
+
+    public void setCurrentSong(Song currentSong) {
+        this.currentSong = currentSong;
     }
 }
