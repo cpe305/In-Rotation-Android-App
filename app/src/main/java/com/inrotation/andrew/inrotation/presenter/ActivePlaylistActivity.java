@@ -1,9 +1,13 @@
 package com.inrotation.andrew.inrotation.presenter;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.google.firebase.database.ChildEventListener;
@@ -15,6 +19,7 @@ import com.google.firebase.database.Logger;
 import com.google.firebase.database.ValueEventListener;
 import com.inrotation.andrew.inrotation.model.DatabaseModifier;
 import com.inrotation.andrew.inrotation.model.Playlist;
+import com.inrotation.andrew.inrotation.model.PlaylistManager;
 import com.inrotation.andrew.inrotation.model.SearchLibrary;
 import com.inrotation.andrew.inrotation.model.Song;
 import com.inrotation.andrew.inrotation.model.SpotifyAccess;
@@ -31,6 +36,7 @@ public class ActivePlaylistActivity extends AppCompatActivity {
     protected ListView mListView;
     protected Player mPlayer;
     protected SearchListAdapter adapter;
+    protected PlaylistManager playlistManager;
 
     protected String playlistKey;
 
@@ -88,6 +94,36 @@ public class ActivePlaylistActivity extends AppCompatActivity {
 
         });
 
+        final FloatingActionButton joinPlaylistButton = (FloatingActionButton) findViewById(R.id.AddSongActionButton);
+        joinPlaylistButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent addSongIntent = new Intent(v.getContext(), AddSongActivity.class);
+                startActivity(addSongIntent);
+            }
+        });
+
+
+        playlistManager = new PlaylistManager();
+        final ImageButton playButton = (ImageButton) findViewById(R.id.playButton);
+        playButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                playlistManager.onPlayButtonClicked(playButton);
+            }
+        });
+
+        final ImageButton rewindButton = (ImageButton) findViewById(R.id.rewindButton);
+        rewindButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                playlistManager.onPreviousButtonClicked(playButton);
+            }
+        });
+
+        final ImageButton fastForwardButton = (ImageButton) findViewById(R.id.fastforwardButton);
+        fastForwardButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                playlistManager.onNextButtonClicked(playButton);
+            }
+        });
 
         /*SpotifyAccess spotifyAccessInstance = SpotifyAccess.getInstance();
         mPlayer = spotifyAccessInstance.getSpotifyPlayer();
@@ -156,12 +192,14 @@ public class ActivePlaylistActivity extends AppCompatActivity {
                      */
                 }
 
+
             }
             @Override
             public void onCancelled(DatabaseError arg0) {
                 System.out.println("The read failed: " + arg0.getCode());
             }
         });
+        ViewRefresher.refreshPlayerBar(this, this);
 
 
 

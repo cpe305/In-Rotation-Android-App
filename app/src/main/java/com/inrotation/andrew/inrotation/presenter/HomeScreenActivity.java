@@ -2,7 +2,6 @@ package com.inrotation.andrew.inrotation.presenter;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -337,10 +336,18 @@ public class HomeScreenActivity extends AppCompatActivity implements
                 });
 
 
-        final FloatingActionButton newPlaylistButton = (FloatingActionButton) findViewById(R.id.CreatePlaylistActionButton);
+        final FloatingActionButton newPlaylistButton = (FloatingActionButton) findViewById(R.id.AddSongActionButton);
         newPlaylistButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent newPlaylistIntent = new Intent(v.getContext(), NewPlaylistActivity.class);
+                startActivity(newPlaylistIntent);
+            }
+        });
+
+        final FloatingActionButton joinPlaylistButton = (FloatingActionButton) findViewById(R.id.JoinPlaylistActionButton);
+        joinPlaylistButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent newPlaylistIntent = new Intent(v.getContext(), JoinPlaylistActivity.class);
                 startActivity(newPlaylistIntent);
             }
         });

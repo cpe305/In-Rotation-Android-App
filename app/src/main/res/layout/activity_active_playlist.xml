@@ -26,5 +26,76 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/my_toolbar" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/ic_menu_add"
+        android:id="@+id/AddSongActionButton"
+        app:elevation="5dp"
+        app:backgroundTint="@android:color/holo_green_dark"
+        android:layout_alignBottom="@+id/songListView"
+        android:layout_alignParentRight="true"
+        android:layout_above="@+id/songListView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="80dp"
+        android:layout_marginRight="20dp"/>
+
+    <LinearLayout
+        android:id="@+id/musicbarmenucontainer"
+        android:layout_width="match_parent"
+        android:weightSum="3"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:baselineAlignBottom="true"
+        android:background="@color/colorPrimaryDark"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/playerBarCoverView"
+            android:contentDescription="Album Cover"
+            android:layout_marginLeft="30dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp" />
+
+        <ImageButton
+            android:id="@+id/rewindButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:background="@android:drawable/ic_media_previous"
+            android:layout_weight="0.21"
+            android:layout_marginLeft="70dp"
+            android:clickable="true"
+            android:minWidth="50dp" />
+
+        <ImageButton
+            android:id="@+id/playButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:scaleType="fitXY"
+            android:background="@android:drawable/ic_media_play"
+            android:layout_weight="0.21"
+            android:layout_marginLeft="10dp"
+            android:minWidth="50dp" />
+
+        <ImageButton
+            android:id="@+id/fastforwardButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:layout_weight="0.33"
+            android:background="@android:drawable/ic_media_next"
+            android:baselineAlignBottom="false"
+            android:contextClickable="true"
+            android:layout_marginLeft="10dp"
+            android:clickable="true"
+            android:minWidth="50dp" />
+
+    </LinearLayout>
+
 
 </RelativeLayout>

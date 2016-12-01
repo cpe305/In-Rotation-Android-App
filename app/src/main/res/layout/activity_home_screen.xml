@@ -85,7 +85,7 @@
         android:orientation="horizontal"
         android:background="@color/colorPrimaryDark"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/CreatePlaylistActionButton">
+        android:layout_below="@+id/AddSongActionButton">
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/playerBarCoverView"
@@ -140,7 +140,7 @@
         app:srcCompat="@android:drawable/ic_menu_edit"
         android:layout_marginEnd="28dp"
         android:layout_marginBottom="46dp"
-        android:id="@+id/CreatePlaylistActionButton"
+        android:id="@+id/AddSongActionButton"
         app:elevation="5dp"
         app:backgroundTint="@color/colorAccent"
         android:layout_above="@+id/actionbarT"
@@ -154,8 +154,8 @@
         app:srcCompat="@android:drawable/ic_menu_directions"
         android:id="@+id/JoinPlaylistActionButton"
         app:elevation="5dp"
-        android:layout_above="@+id/CreatePlaylistActionButton"
-        android:layout_alignStart="@+id/CreatePlaylistActionButton"
+        android:layout_above="@+id/AddSongActionButton"
+        android:layout_alignStart="@+id/AddSongActionButton"
         android:layout_marginBottom="22dp" />
 
 </RelativeLayout>

@@ -44,7 +44,10 @@
         <activity
             android:name=".presenter.ActivePlaylistActivity"
             android:parentActivityName=".presenter.HomeScreenActivity" />
-        <activity android:name=".presenter.JoinPlaylistActivity"></activity>
+        <activity
+            android:name=".presenter.JoinPlaylistActivity"
+            android:noHistory="true" />
+        <activity android:name=".presenter.AddSongActivity"></activity>
     </application>
 
 </manifest>
