@@ -2,6 +2,8 @@ package com.inrotation.andrew.inrotation.model;
 
 import com.spotify.sdk.android.player.Player;
 
+import java.util.ArrayList;
+
 /**
  * Created by andrewcofano on 11/3/16.
  */
@@ -14,12 +16,17 @@ public class SpotifyAccess {
     private Player spotifyPlayer;
     private HostUser spotifyUser;
     private Song currentSong;
+    private int currentSongIndex;
+    private ArrayList<Song> songList;
+    private String currentPlaylist;
 
 
     private SpotifyAccess() {
         this.accessToken = "";
         this.clientId = "";
         this.currentSong = null;
+        this.currentPlaylist = "";
+        this.currentSongIndex = 0;
     }
 
     public static synchronized SpotifyAccess getInstance() {
@@ -67,5 +74,29 @@ public class SpotifyAccess {
 
     public void setCurrentSong(Song currentSong) {
         this.currentSong = currentSong;
+    }
+
+    public ArrayList<Song> getSongList() {
+        return songList;
+    }
+
+    public void setSongList(ArrayList<Song> songList) {
+        this.songList = songList;
+    }
+
+    public String getCurrentPlaylist() {
+        return currentPlaylist;
+    }
+
+    public void setCurrentPlaylist(String currentPlaylist) {
+        this.currentPlaylist = currentPlaylist;
+    }
+
+    public int getCurrentSongIndex() {
+        return currentSongIndex;
+    }
+
+    public void setCurrentSongIndex(int currentSongIndex) {
+        this.currentSongIndex = currentSongIndex;
     }
 }

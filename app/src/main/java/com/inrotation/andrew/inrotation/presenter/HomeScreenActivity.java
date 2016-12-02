@@ -69,6 +69,7 @@ public class HomeScreenActivity extends AppCompatActivity implements
     private AuthenticationResponse authenRes;
     private Authenticator userAuthenticator;
     private PlaylistManager playlistManager;
+    private ImageButton playButton, rewindButton, fastForwardButton;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -102,29 +103,31 @@ public class HomeScreenActivity extends AppCompatActivity implements
 
         onAuthenticateClick();
 
-
         playlistManager = new PlaylistManager();
-        final ImageButton playButton = (ImageButton) findViewById(R.id.playButton);
+
+    }
+
+    private void setPlayerControls() {
+        playButton = (ImageButton) findViewById(R.id.playButton);
         playButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 playlistManager.onPlayButtonClicked(playButton);
             }
         });
 
-        final ImageButton rewindButton = (ImageButton) findViewById(R.id.rewindButton);
+        rewindButton = (ImageButton) findViewById(R.id.rewindButton);
         rewindButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                playlistManager.onPreviousButtonClicked(playButton);
+                playlistManager.playPreviousSong();
             }
         });
 
-        final ImageButton fastForwardButton = (ImageButton) findViewById(R.id.fastforwardButton);
+        fastForwardButton = (ImageButton) findViewById(R.id.fastforwardButton);
         fastForwardButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                playlistManager.onNextButtonClicked(playButton);
+                playlistManager.playNextSong();
             }
         });
-
     }
 
 
@@ -201,11 +204,11 @@ public class HomeScreenActivity extends AppCompatActivity implements
     @Override
     public void onPlaybackEvent(PlayerEvent playerEvent) {
         Log.d("HomeScreenActivity", "Playback event received: " + playerEvent.name());
-        switch (playerEvent) {
-            // Handle event type as necessary
-            default:
-                break;
+        if (playerEvent == PlayerEvent.kSpPlaybackNotifyAudioDeliveryDone) {
+            PlaylistManager manager = new PlaylistManager();
+            manager.playNextSong();
         }
+
     }
 
     @Override
@@ -246,6 +249,11 @@ public class HomeScreenActivity extends AppCompatActivity implements
                                 loadUserNameView(createdUser.getUserName());
                                 loadProfilePic(createdUser.getProfilePicURL());
                                 processFirebaseLogin(createdUser);
+                                SpotifyAccess access = SpotifyAccess.getInstance();
+                                if (access.getCurrentPlaylist().equals(access.getSpotifyUser().getPlaylistToken())) {
+                                    setPlayerControls();
+                                }
+
                             }
                             else {
                                 new AlertDialog.Builder(HomeScreenActivity.this)
@@ -286,6 +294,7 @@ public class HomeScreenActivity extends AppCompatActivity implements
         };
         // Add the request to the RequestQueue.
         queue.add(arrayRequest);
+
     }
 
     public void processFirebaseLogin(final HostUser createdUser) {

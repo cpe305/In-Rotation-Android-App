@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.inrotation.andrew.inrotation.R;
 import com.inrotation.andrew.inrotation.model.Playlist;
 import com.inrotation.andrew.inrotation.model.Song;
+import com.inrotation.andrew.inrotation.model.SpotifyAccess;
 
 public class JoinPlaylistActivity extends AppCompatActivity {
 
@@ -32,6 +33,7 @@ public class JoinPlaylistActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_playlist);
+
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -51,29 +53,37 @@ public class JoinPlaylistActivity extends AppCompatActivity {
                     imm.hideSoftInputFromWindow(editTextName.getWindowToken(),
                             InputMethodManager.RESULT_UNCHANGED_SHOWN);
                     handled = true;
+                    checkPlaylistCode(editTextName.getText().toString(), v);
                 }
                 return handled;
             }
         });
+        final Context context = getApplicationContext();
         Button doneButton = (Button) findViewById(R.id.PlaylistNameDoneButton);
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkPlaylistCode(editTextName.getText().toString(), v);
+                SpotifyAccess access = SpotifyAccess.getInstance();
+                if (editTextName.getText().toString().equals(access.getSpotifyUser().getPlaylistToken())) {
+                    Toast.makeText(context, "Cannot join your own playlist.",
+                            Toast.LENGTH_LONG).show();
+                }
+                else {
+                    checkPlaylistCode(editTextName.getText().toString(), v);
+                }
             }
         });
     }
 
-    protected void checkPlaylistCode(String codeInput, final View v) {
+    protected void checkPlaylistCode(final String codeInput, final View v) {
         final Context context = getApplicationContext();
         DatabaseReference ref = database.getReference("server/saving-data/playlists/");
         ref.child(codeInput).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    Playlist post = snapshot.getValue(Playlist.class);
                     Intent joinPlaylistIntent = new Intent(v.getContext(), ActivePlaylistActivity.class);
-                    joinPlaylistIntent.putExtra("PlaylistCode", post.getKey());
+                    joinPlaylistIntent.putExtra("playlistCode", codeInput);
                     startActivity(joinPlaylistIntent);
                 }
                 else {

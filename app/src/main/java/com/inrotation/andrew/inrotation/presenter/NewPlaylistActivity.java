@@ -120,16 +120,11 @@ public class NewPlaylistActivity extends AppCompatActivity {
         accessInstance.getSpotifyUser().setActivePlaylist(createdPlaylist);
 
         dbModifier = new DatabaseModifier();
-        dbModifier.addPlaylist(createdPlaylist);
+        dbModifier.addPlaylist(createdPlaylist, selectedSong);
 
 
-        Intent i = new Intent();
-        Bundle b = new Bundle();
-
-        b.putSerializable("firstSong", selectedSong);
-        b.putString("playlistName", getSupportActionBar().getTitle().toString());
-        i.putExtras(b);
-        i.setClass(this, ActivePlaylistActivity.class);
+        Intent i = new Intent(this, ActivePlaylistActivity.class);
+        i.putExtra("playlistCode", accessInstance.getSpotifyUser().getPlaylistToken());
         startActivity(i);
 
 

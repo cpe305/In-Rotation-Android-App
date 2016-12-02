@@ -41,11 +41,18 @@ public class SpotifyProfileBuilder {
 
             JSONArray profilePic = response.getJSONArray("images");
             String userName = response.getString("display_name");
+            if (userName.isEmpty()) {
+                userName = response.getString("id");
+            }
             String profileEmail = response.getString("email");
             String dbPassword = response.getString("birthdate");
-            JSONObject profilePicObject = profilePic.getJSONObject(0);
-            String profilePicURL = profilePicObject.getString("url");
+            String profilePicURL = "";
+            if (profilePic.length() != 0) {
+                JSONObject profilePicObject = profilePic.getJSONObject(0);
+                profilePicURL = profilePicObject.getString("url");
+            }
             newUser = new HostUser(userName, spotifyAccessInstance.getAccessToken(), profilePicURL, profileEmail, dbPassword);
+            Log.d("YENG", newUser.toString());
             newUser.setPlaylistToken(profileEmail.split("@")[0]);
             spotifyAccessInstance.setSpotifyUser(newUser);
 

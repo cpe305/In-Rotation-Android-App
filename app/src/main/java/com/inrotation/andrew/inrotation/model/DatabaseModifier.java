@@ -53,9 +53,9 @@ public class DatabaseModifier {
 
     }
 
-    public void addPlaylist(Playlist createdPlaylist) {
-        DatabaseReference ref = database.getReference("server/saving-data");
-        DatabaseReference playRef = ref.child("playlists");
+    public void addPlaylist(Playlist createdPlaylist, Song firstSong) {
+        DatabaseReference ref = database.getReference("server/saving-data/playlists");
+        //DatabaseReference playRef = ref.child("playlists");
         //DatabaseReference playlistsRef = ref.push();
         //playlistsRef.setValue(createdPlaylist);
 
@@ -63,8 +63,33 @@ public class DatabaseModifier {
         String[] key = createdPlaylist.owner.split("@");
         playlist.put(key[0], createdPlaylist);
 
+
         //playlist.put(String.valueOf(createdPlaylist.hashCode()), createdPlaylist);
-        playRef.setValue(playlist);
+        ref.setValue(playlist);
+        addFirstSong(key[0], firstSong);
     }
 
+    private void addFirstSong(String playlistCode, Song selectedSong) {
+        DatabaseReference ref = database.getReference("server/saving-data/playlists/"+playlistCode+"/");
+        DatabaseReference listRef = ref.child("songArrayList");
+
+        DatabaseReference newSongRef = listRef.push();
+        String songID = newSongRef.getKey();
+
+        DatabaseReference currentSongRef = ref.child("currentSongIndex");
+        currentSongRef.setValue(songID);
+        newSongRef.setValue(selectedSong);
+        SpotifyAccess spotifyAccess = SpotifyAccess.getInstance();
+        spotifyAccess.setSongList(new ArrayList<Song>());
+        spotifyAccess.getSongList().add(selectedSong);
+    }
+
+    public void addSongToPlaylist(String playlistCode, Song selectedSong) {
+        DatabaseReference ref = database.getReference("server/saving-data/playlists/"+playlistCode+"/");
+        DatabaseReference listRef = ref.child("songArrayList");
+
+        DatabaseReference newSongRef = listRef.push();
+        newSongRef.setValue(selectedSong);
+
+    }
 }

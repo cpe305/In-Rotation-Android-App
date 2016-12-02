@@ -28,6 +28,7 @@ public class HostUser extends User {
         this.playlistCollection = new ArrayList<>();
         this.email = email;
         this.dbPassword = dbPassword;
+        this.playlistToken = email.split("@")[0];
     }
 
 
