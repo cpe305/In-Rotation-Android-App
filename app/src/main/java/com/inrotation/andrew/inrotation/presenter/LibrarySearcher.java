@@ -1,4 +1,4 @@
-package com.inrotation.andrew.inrotation.model;
+package com.inrotation.andrew.inrotation.presenter;
 
 import android.content.Context;
 import android.util.ArrayMap;
@@ -7,6 +7,8 @@ import android.util.Log;
 import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.inrotation.andrew.inrotation.model.MyJSONException;
+import com.inrotation.andrew.inrotation.model.Song;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,7 +21,7 @@ import java.util.Map;
  * Created by andrewcofano on 11/18/16.
  */
 
-public class SearchLibrary {
+public class LibrarySearcher {
 
     private static final String SPOTIFY_SEARCH_URL_STANDARD = "https://api.spotify.com/v1/search?q=";
 
@@ -76,7 +78,7 @@ public class SearchLibrary {
         return returnArray;
     }
 
-    protected static String createQuerySearchURL(String[] queryWords) {
+    public static String createQuerySearchURL(String[] queryWords) {
         int index;
         StringBuilder trackSearchURL = new StringBuilder();
         trackSearchURL.append(SPOTIFY_SEARCH_URL_STANDARD);

@@ -1,4 +1,4 @@
-package com.inrotation.andrew.inrotation.model;
+package com.inrotation.andrew.inrotation.data_access;
 
 import android.util.Log;
 
@@ -8,6 +8,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.inrotation.andrew.inrotation.model.HostUser;
+import com.inrotation.andrew.inrotation.model.Playlist;
+import com.inrotation.andrew.inrotation.model.Song;
+import com.inrotation.andrew.inrotation.model.SpotifyAccess;
 
 import java.util.ArrayList;
 import java.util.HashMap;

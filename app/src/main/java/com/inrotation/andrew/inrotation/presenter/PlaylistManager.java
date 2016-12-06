@@ -1,4 +1,4 @@
-package com.inrotation.andrew.inrotation.model;
+package com.inrotation.andrew.inrotation.presenter;
 
 import android.media.Image;
 import android.util.Log;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.inrotation.andrew.inrotation.R;
+import com.inrotation.andrew.inrotation.model.Song;
+import com.inrotation.andrew.inrotation.model.SpotifyAccess;
 import com.spotify.sdk.android.player.ConnectionStateCallback;
 import com.spotify.sdk.android.player.Error;
 import com.spotify.sdk.android.player.PlaybackState;

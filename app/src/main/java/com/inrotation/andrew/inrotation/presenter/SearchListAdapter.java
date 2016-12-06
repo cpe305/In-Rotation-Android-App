@@ -1,20 +1,15 @@
 package com.inrotation.andrew.inrotation.presenter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.NetworkImageView;
-import com.inrotation.andrew.inrotation.model.RequestQueue;
+import com.inrotation.andrew.inrotation.data_access.RequestQueue;
 import com.inrotation.andrew.inrotation.model.Song;
 import com.inrotation.andrew.inrotation.R;
 

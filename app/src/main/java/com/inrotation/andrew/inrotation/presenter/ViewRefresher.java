@@ -6,7 +6,7 @@ import android.content.Context;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.inrotation.andrew.inrotation.R;
-import com.inrotation.andrew.inrotation.model.RequestQueue;
+import com.inrotation.andrew.inrotation.data_access.RequestQueue;
 import com.inrotation.andrew.inrotation.model.Song;
 import com.inrotation.andrew.inrotation.model.SpotifyAccess;
 import com.spotify.sdk.android.player.Player;

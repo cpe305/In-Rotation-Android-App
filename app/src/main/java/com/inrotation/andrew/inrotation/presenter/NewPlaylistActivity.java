@@ -19,10 +19,9 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
-import com.inrotation.andrew.inrotation.model.DatabaseModifier;
+import com.inrotation.andrew.inrotation.data_access.DatabaseModifier;
 import com.inrotation.andrew.inrotation.model.NewPlaylistCreator;
 import com.inrotation.andrew.inrotation.model.Playlist;
-import com.inrotation.andrew.inrotation.model.SearchLibrary;
 import com.inrotation.andrew.inrotation.model.Song;
 import com.inrotation.andrew.inrotation.R;
 import com.inrotation.andrew.inrotation.model.SpotifyAccess;
@@ -98,7 +97,7 @@ public class NewPlaylistActivity extends AppCompatActivity {
     protected void presentSongMatches(String searchInput) {
         mListView = (ListView) findViewById(R.id.songSearchListView);
 
-        final ArrayList<Song> songMatches = SearchLibrary.obtainSongMatches(searchInput.split(" "), this);
+        final ArrayList<Song> songMatches = LibrarySearcher.obtainSongMatches(searchInput.split(" "), this);
         SearchListAdapter adapter = new SearchListAdapter(this, songMatches);
         Log.d("SongMatches", songMatches.toString());
         mListView.setAdapter(adapter);

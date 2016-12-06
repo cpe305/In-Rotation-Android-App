@@ -1,4 +1,4 @@
-package com.inrotation.andrew.inrotation.model;
+package com.inrotation.andrew.inrotation.data_access;
 
 import android.content.Context;
 import android.graphics.Bitmap;
