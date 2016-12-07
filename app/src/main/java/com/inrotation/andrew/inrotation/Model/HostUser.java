@@ -1,6 +1,5 @@
 package com.inrotation.andrew.inrotation.model;
 
-import com.google.firebase.database.Exclude;
 
 import java.util.ArrayList;
 
@@ -8,7 +7,7 @@ import java.util.ArrayList;
  * Created by Andrew on 10/30/16.
  */
 
-public class HostUser extends User {
+public class HostUser {
 
     private String name;
     private String spotifyAccessToken;

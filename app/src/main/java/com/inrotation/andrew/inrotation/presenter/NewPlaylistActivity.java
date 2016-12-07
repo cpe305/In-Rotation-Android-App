@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,10 +34,6 @@ import java.util.ArrayList;
  */
 
 public class NewPlaylistActivity extends AppCompatActivity {
-
-    private DatabaseReference mDatabase;
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
 
     private ListView mListView;
     private Playlist createdPlaylist;
@@ -79,14 +76,23 @@ public class NewPlaylistActivity extends AppCompatActivity {
 
     protected void ExpectFirstSongPick() {
         final EditText editTextName = (EditText) findViewById(R.id.FirstSongNameSearch);
+        final Context context = getApplicationContext();
         editTextName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    String songSearches = editTextName.getText().toString();
-                    presentSongMatches(songSearches);
-                    handled = true;
+                    if (editTextName.getText().toString().isEmpty()) {
+                        Toast.makeText(context, "Please enter something.",
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(editTextName.getWindowToken(),
+                                InputMethodManager.RESULT_UNCHANGED_SHOWN);
+                        String songSearches = editTextName.getText().toString();
+                        presentSongMatches(songSearches);
+                        handled = true;
+                    }
                 }
 
                 return handled;
@@ -98,6 +104,10 @@ public class NewPlaylistActivity extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.songSearchListView);
 
         final ArrayList<Song> songMatches = LibrarySearcher.obtainSongMatches(searchInput.split(" "), this);
+        if (songMatches.isEmpty()) {
+            Toast.makeText(this, "No search results found",
+                    Toast.LENGTH_SHORT).show();
+        }
         SearchListAdapter adapter = new SearchListAdapter(this, songMatches);
         Log.d("SongMatches", songMatches.toString());
         mListView.setAdapter(adapter);
@@ -106,6 +116,7 @@ public class NewPlaylistActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
                 Song selectedSong = songMatches.get(position);
                 startActivePlaylist(selectedSong);
+
             }
         });
     }

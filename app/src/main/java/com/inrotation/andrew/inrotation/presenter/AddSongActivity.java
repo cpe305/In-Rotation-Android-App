@@ -1,5 +1,6 @@
 package com.inrotation.andrew.inrotation.presenter;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -7,10 +8,12 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.inrotation.andrew.inrotation.R;
 import com.inrotation.andrew.inrotation.data_access.DatabaseModifier;
@@ -33,12 +36,7 @@ public class AddSongActivity extends AppCompatActivity {
             playlistCode = (String) b.get("playlistCode");
         }
 
-
-
         setContentView(R.layout.activity_add_song);
-
-
-
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
@@ -64,14 +62,24 @@ public class AddSongActivity extends AppCompatActivity {
 
     protected void ExpectFirstSongPick() {
         final EditText editTextName = (EditText) findViewById(R.id.SongNameSearch);
+        final Context context = getApplicationContext();
         editTextName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    String songSearches = editTextName.getText().toString();
-                    presentSongMatches(songSearches);
-                    handled = true;
+                    if (editTextName.getText().toString().isEmpty()) {
+                        Toast.makeText(context, "Please enter something.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(editTextName.getWindowToken(),
+                                InputMethodManager.RESULT_UNCHANGED_SHOWN);
+                        String songSearches = editTextName.getText().toString();
+                        presentSongMatches(songSearches);
+                        handled = true;
+                    }
                 }
 
                 return handled;
@@ -83,6 +91,10 @@ public class AddSongActivity extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.songSearchListView);
 
         final ArrayList<Song> songMatches = LibrarySearcher.obtainSongMatches(searchInput.split(" "), this);
+        if (songMatches.isEmpty()) {
+            Toast.makeText(this, "No search results found",
+                    Toast.LENGTH_SHORT).show();
+        }
         SearchListAdapter adapter = new SearchListAdapter(this, songMatches);
         Log.d("SongMatches", songMatches.toString());
         mListView.setAdapter(adapter);

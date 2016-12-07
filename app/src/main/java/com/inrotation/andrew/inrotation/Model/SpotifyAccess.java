@@ -3,6 +3,7 @@ package com.inrotation.andrew.inrotation.model;
 import com.spotify.sdk.android.player.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by andrewcofano on 11/3/16.
@@ -17,7 +18,7 @@ public class SpotifyAccess {
     private HostUser spotifyUser;
     private Song currentSong;
     private int currentSongIndex;
-    private ArrayList<Song> songList;
+    private List<Song> songList;
     private String currentPlaylist;
 
 
@@ -76,7 +77,7 @@ public class SpotifyAccess {
         this.currentSong = currentSong;
     }
 
-    public ArrayList<Song> getSongList() {
+    public List<Song> getSongList() {
         return songList;
     }
 

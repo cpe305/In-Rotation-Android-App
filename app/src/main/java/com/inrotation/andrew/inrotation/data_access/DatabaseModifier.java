@@ -1,8 +1,5 @@
 package com.inrotation.andrew.inrotation.data_access;
 
-import android.util.Log;
-
-import com.google.android.gms.location.places.PlaceReport;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,28 +44,16 @@ public class DatabaseModifier {
                 System.out.println("The read failed: " + arg0.getCode());
             }
         });
-        // DatabaseReference usersRef = ref.child("users");
-
-        /*
-        Map<String, HostUser> users = new HashMap<String, HostUser>();
-        users.put(String.valueOf(createdUser.hashCode()), createdUser);
-        usersRef.setValue(users);*/
-
 
     }
 
     public void addPlaylist(Playlist createdPlaylist, Song firstSong) {
         DatabaseReference ref = database.getReference("server/saving-data/playlists");
-        //DatabaseReference playRef = ref.child("playlists");
-        //DatabaseReference playlistsRef = ref.push();
-        //playlistsRef.setValue(createdPlaylist);
 
         Map<String, Playlist> playlist = new HashMap<>();
         String[] key = createdPlaylist.owner.split("@");
         playlist.put(key[0], createdPlaylist);
 
-
-        //playlist.put(String.valueOf(createdPlaylist.hashCode()), createdPlaylist);
         ref.setValue(playlist);
         addFirstSong(key[0], firstSong);
     }

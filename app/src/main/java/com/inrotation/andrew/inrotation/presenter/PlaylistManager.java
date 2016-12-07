@@ -1,19 +1,13 @@
 package com.inrotation.andrew.inrotation.presenter;
 
-import android.media.Image;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageButton;
 
-import com.inrotation.andrew.inrotation.R;
 import com.inrotation.andrew.inrotation.model.Song;
 import com.inrotation.andrew.inrotation.model.SpotifyAccess;
-import com.spotify.sdk.android.player.ConnectionStateCallback;
 import com.spotify.sdk.android.player.Error;
 import com.spotify.sdk.android.player.PlaybackState;
 import com.spotify.sdk.android.player.Player;
-import com.spotify.sdk.android.player.PlayerEvent;
-import com.spotify.sdk.android.player.SpotifyPlayer;
 
 import java.util.ArrayList;
 
@@ -64,8 +58,7 @@ public class PlaylistManager {
     public void playPreviousSong() {
         SpotifyAccess access = SpotifyAccess.getInstance();
         Player player = access.getSpotifyPlayer();
-        PlaybackState playbackState = player.getPlaybackState();
-        ArrayList<Song> list = access.getSongList();
+        ArrayList<Song> list = (ArrayList<Song>)(access.getSongList());
         int currentIndex = access.getCurrentSongIndex();
         if (currentIndex == 0) {
             player.playUri(null, list.get(currentIndex).songURI, 0, 0);
@@ -83,9 +76,8 @@ public class PlaylistManager {
     public void playNextSong() {
         SpotifyAccess access = SpotifyAccess.getInstance();
         Player player = access.getSpotifyPlayer();
-        PlaybackState playbackState = player.getPlaybackState();
 
-        ArrayList<Song> list = access.getSongList();
+        ArrayList<Song> list = (ArrayList<Song>)access.getSongList();
         int currentIndex = access.getCurrentSongIndex();
         if (currentIndex < list.size() - 1) {
             int newIndex = currentIndex + 1;

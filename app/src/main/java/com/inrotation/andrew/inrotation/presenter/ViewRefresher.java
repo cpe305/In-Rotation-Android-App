@@ -9,7 +9,6 @@ import com.inrotation.andrew.inrotation.R;
 import com.inrotation.andrew.inrotation.data_access.RequestQueue;
 import com.inrotation.andrew.inrotation.model.Song;
 import com.inrotation.andrew.inrotation.model.SpotifyAccess;
-import com.spotify.sdk.android.player.Player;
 
 /**
  * Created by Andrew on 11/30/16.
@@ -19,8 +18,6 @@ public class ViewRefresher {
 
     public static void refreshPlayerBar(Activity activity, Context context) {
         SpotifyAccess spotifyAccess = SpotifyAccess.getInstance();
-        Player player = spotifyAccess.getSpotifyPlayer();
-
         Song currentSong = spotifyAccess.getCurrentSong();
         if (currentSong != null) {
             String albumURL = currentSong.albumCoverURLs.get(2);

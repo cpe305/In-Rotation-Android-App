@@ -29,11 +29,6 @@ import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
-
-/*import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;*/
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -61,11 +56,9 @@ public class HomeScreenActivity extends AppCompatActivity implements
         SpotifyPlayer.NotificationCallback, ConnectionStateCallback {
 
     private static final String CLIENT_ID = "11d0740d0e1442a59b1265510a5ba218";
-    private static final String REDIRECT_URI = "in-rotation://callback";
 
     private Player mPlayer;
     private String resAccessToken;
-    private AuthenticationResponse authenRes;
     private Authenticator userAuthenticator;
     private PlaylistManager playlistManager;
     private ImageButton playButton, rewindButton, fastForwardButton;
@@ -73,7 +66,6 @@ public class HomeScreenActivity extends AppCompatActivity implements
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-    private static final int REQUEST_CODE = 1337;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,10 +82,10 @@ public class HomeScreenActivity extends AppCompatActivity implements
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    // User is signed in
+                    // HostUser is signed in
                     Log.d("TAG", "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
-                    // User is signed out
+                    // HostUser is signed out
                     Log.d("TAG", "onAuthStateChanged:signed_out");
                 }
                 // ...
@@ -223,7 +215,7 @@ public class HomeScreenActivity extends AppCompatActivity implements
     @Override
     public void onLoggedIn() {
 
-        Log.d("HomeScreenActivity", "User logged in");
+        Log.d("HomeScreenActivity", "HostUser logged in");
 
         // Instantiate the RequestQueue.
         com.android.volley.RequestQueue queue = Volley.newRequestQueue(this);
@@ -241,7 +233,6 @@ public class HomeScreenActivity extends AppCompatActivity implements
 
 
                             SpotifyProfileBuilder profileBuilder = new SpotifyProfileBuilder();
-                            DatabaseModifier dbModifier = new DatabaseModifier();
 
                             HostUser createdUser = profileBuilder.buildSpotifyProfile(response);
                             if (createdUser != null) {
@@ -386,7 +377,7 @@ public class HomeScreenActivity extends AppCompatActivity implements
 
     @Override
     public void onLoggedOut() {
-        Log.d("HomeScreenActivity", "User logged out");
+        Log.d("HomeScreenActivity", "HostUser logged out");
     }
 
     @Override

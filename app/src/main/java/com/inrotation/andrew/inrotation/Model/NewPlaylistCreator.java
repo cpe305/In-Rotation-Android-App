@@ -14,7 +14,7 @@ public class NewPlaylistCreator {
     private Song firstPlaylistSong;
 
     public NewPlaylistCreator() {
-
+        //Empty Constructor becauase of Firebase requirement
     }
 
     public void setPlaylistName(String name) {
@@ -35,7 +35,6 @@ public class NewPlaylistCreator {
 
     public Playlist createNewPlaylist() {
         SpotifyAccess accessInstance = SpotifyAccess.getInstance();
-        Playlist returnPlaylist = new Playlist(playlistName, accessInstance.getSpotifyUser().getEmail(), firstPlaylistSong);
-        return returnPlaylist;
+        return new Playlist(playlistName, accessInstance.getSpotifyUser().getEmail(), firstPlaylistSong);
     }
 }

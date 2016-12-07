@@ -26,9 +26,7 @@ import java.util.Map;
 
 public class ActivePlaylistActivity extends AppCompatActivity {
 
-    protected Song firstSong;
     protected ArrayList<Song> songList;
-    //protected String playlistName;
     protected ListView mListView;
     protected Player mPlayer;
     protected SearchListAdapter adapter;
@@ -177,7 +175,7 @@ public class ActivePlaylistActivity extends AppCompatActivity {
                 Map<String, Song> map = snapshot.getValue(t);
 
                 // get the values from map.values();
-                Song firstSong = map.get(currentSongId.toString());
+                Song firstSong = map.get(currentSongId);
                 SpotifyAccess spotifyAccessInstance = SpotifyAccess.getInstance();
                 mPlayer = spotifyAccessInstance.getSpotifyPlayer();
                 if (!mPlayer.getPlaybackState().isPlaying) {
@@ -230,15 +228,7 @@ public class ActivePlaylistActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        //populateSongListView();
         ViewRefresher.refreshPlayerBar(this, this);
-        /*DatabaseModifier dbM = new DatabaseModifier();
-        ArrayList<String> albumCovers = new ArrayList<>();
-        albumCovers.add("https://i.scdn.co/image/25c94ed54d2cd65ff9ad182f6a72c62f5e657fbe");
-        albumCovers.add("https://i.scdn.co/image/6a18417aa31ba778a28bc0edc48addbf87a7dd9f");
-        albumCovers.add("https://i.scdn.co/image/627825639a712adac59443465bd8bc6400238060");
-        dbM.addSongToPlaylist("andrewdecaf", new Song("Night Riders", "Major Lazer", "Peace Is The Mission", 3000, albumCovers, "spotify:track:2SKwCzTG3flzBqYQhGWj8J", true));
-        */
     }
 
     @Override

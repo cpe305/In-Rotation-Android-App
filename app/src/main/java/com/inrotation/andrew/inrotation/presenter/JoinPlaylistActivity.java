@@ -21,8 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.inrotation.andrew.inrotation.R;
-import com.inrotation.andrew.inrotation.model.Playlist;
-import com.inrotation.andrew.inrotation.model.Song;
 import com.inrotation.andrew.inrotation.model.SpotifyAccess;
 
 public class JoinPlaylistActivity extends AppCompatActivity {
@@ -34,13 +32,10 @@ public class JoinPlaylistActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_playlist);
 
-
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
         getSupportActionBar().setTitle("Join A Playlist");
-
-
         database = FirebaseDatabase.getInstance();
 
         final EditText editTextName = (EditText) findViewById(R.id.searchPlaylistCode);
