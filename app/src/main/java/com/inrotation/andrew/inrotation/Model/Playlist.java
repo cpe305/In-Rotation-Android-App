@@ -19,6 +19,12 @@ public class Playlist {
         //Empty Constructor becauase of Firebase requirement
     }
 
+    /**
+     *
+     * @param playlistName The display name of the user's playlist
+     * @param owner The In Rotation user that hosts the playlist
+     * @param firstSong The first song of the playlist
+     */
     public Playlist(String playlistName, String owner, Song firstSong) {
         this.playlistName = playlistName;
         this.owner = owner;

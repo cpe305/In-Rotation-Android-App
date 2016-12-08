@@ -276,9 +276,14 @@ public class HomeScreenActivity extends AppCompatActivity implements
 
 
                         }
-                        catch (Exception e) {
-                            e.printStackTrace();
+                        catch (RuntimeException e) {
+                            //e.printStackTrace();
+                            throw e;
                         }
+                        catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+
                     }
                 }, new Response.ErrorListener() {
             @Override
