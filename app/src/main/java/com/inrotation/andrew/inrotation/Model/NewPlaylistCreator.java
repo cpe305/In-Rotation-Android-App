@@ -35,6 +35,6 @@ public class NewPlaylistCreator {
 
     public Playlist createNewPlaylist() {
         SpotifyAccess accessInstance = SpotifyAccess.getInstance();
-        return new Playlist(playlistName, accessInstance.getSpotifyUser().getEmail(), firstPlaylistSong);
+        return new Playlist(playlistName, accessInstance.getSpotifyUser().getEmail());
     }
 }
