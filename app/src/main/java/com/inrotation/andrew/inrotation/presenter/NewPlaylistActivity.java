@@ -102,7 +102,7 @@ public class NewPlaylistActivity extends AppCompatActivity {
 
         final ArrayList<Song> songMatches = LibrarySearcher.obtainSongMatches(searchInput.split(" "), this);
         if (songMatches.isEmpty()) {
-            Toast.makeText(this, this.getString(R.string.no_search_results),
+            Toast.makeText(this, this.getString(R.string.no_search_results_error),
                     Toast.LENGTH_SHORT).show();
         }
         SearchListAdapter adapter = new SearchListAdapter(this, songMatches);
