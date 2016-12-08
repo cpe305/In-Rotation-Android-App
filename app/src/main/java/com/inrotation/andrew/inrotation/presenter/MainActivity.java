@@ -9,6 +9,10 @@ import android.widget.Button;
 
 import com.inrotation.andrew.inrotation.R;
 
+/**
+ * Represents the activity that handles the login initiation.
+ * Created by Andrew Cofano
+ */
 public class MainActivity extends Activity {
 
     @Override
@@ -19,6 +23,7 @@ public class MainActivity extends Activity {
         final Button authenticateButton = (Button) findViewById(R.id.spotifyAuthenticateButton);
 
         authenticateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
                 runAuthenticateProcess();
             }

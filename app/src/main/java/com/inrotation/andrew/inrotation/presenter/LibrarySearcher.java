@@ -20,15 +20,15 @@ import java.util.Map;
 import java.util.concurrent.RunnableFuture;
 
 /**
- * Created by andrewcofano on 11/18/16.
+ * Represents the handler of search input for the Spotify Music Library.
+ * Created by Andrew Cofano
  */
-
 public class LibrarySearcher {
 
     private static final String SPOTIFY_SEARCH_URL_STANDARD = "https://api.spotify.com/v1/search?q=";
 
 
-    public static ArrayList<Song> obtainSongMatches(String[] queryWords, Context context) {
+    protected static ArrayList<Song> obtainSongMatches(String[] queryWords, Context context) {
 
         com.android.volley.RequestQueue queue = Volley.newRequestQueue(context);
 
@@ -104,7 +104,7 @@ public class LibrarySearcher {
         return trackSearchURL.toString();
     }
 
-    protected static Song createSongOf(JSONObject jsonTrack) throws MyJSONException {
+    private static Song createSongOf(JSONObject jsonTrack) throws MyJSONException {
         Song newSong;
 
         try {
@@ -126,13 +126,13 @@ public class LibrarySearcher {
             throw e;
         }
         catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new MyJSONException(e);
         }
 
     }
 
 
-    protected static ArrayList<String> createAlbumCoverList(JSONArray albumCovers) {
+    private static ArrayList<String> createAlbumCoverList(JSONArray albumCovers) throws MyJSONException {
         ArrayList<String> albumCoverURLs = new ArrayList<>();
 
         for (int i = 0; i < albumCovers.length(); i++) {
@@ -144,7 +144,7 @@ public class LibrarySearcher {
                 throw e;
             }
             catch (Exception e) {
-                throw new RuntimeException(e);
+                throw new MyJSONException(e);
             }
         }
 

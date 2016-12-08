@@ -2,6 +2,10 @@ package com.inrotation.andrew.inrotation.model;
 
 import java.util.List;
 
+/**
+ * Represents a song from the Spotify Music Library that will make up a Playlist.
+ * Created by Andrew Cofano
+ */
 public class Song {
 
     public String songName;

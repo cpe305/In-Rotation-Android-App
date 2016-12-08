@@ -4,6 +4,7 @@ package com.inrotation.andrew.inrotation.model;
 import java.util.ArrayList;
 
 /**
+ * Represents the current user who can host a playlist, search the Spotify Music Library, and play songs.
  * Created by Andrew on 10/30/16.
  */
 

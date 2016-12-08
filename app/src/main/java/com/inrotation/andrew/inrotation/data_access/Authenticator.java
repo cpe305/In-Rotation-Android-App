@@ -5,7 +5,8 @@ import com.spotify.sdk.android.authentication.AuthenticationResponse;
 
 
 /**
- * Created by Andrew on 11/17/16.
+ * Represents the Spotify Authenticator to use during the login process
+ * Created by Andrew Cofano on 11/17/16.
  */
 
 public class Authenticator {
@@ -25,9 +26,7 @@ public class Authenticator {
                 AuthenticationResponse.Type.TOKEN,
                 REDIRECT_URI);
         builder.setScopes(new String[]{"user-read-private", "user-read-birthdate", "user-read-email", "streaming"});
-        AuthenticationRequest request = builder.build();
-
-        return request;
+        return builder.build();
     }
 
 

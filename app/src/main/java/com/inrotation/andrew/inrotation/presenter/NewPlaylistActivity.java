@@ -27,9 +27,9 @@ import com.inrotation.andrew.inrotation.model.SpotifyAccess;
 import java.util.ArrayList;
 
 /**
- * Created by Andrew on 10/18/16.
+ * Represents the activity that handles the creation of a new playlist hosted by the current user.
+ * Created by Andrew Cofano
  */
-
 public class NewPlaylistActivity extends AppCompatActivity {
 
     private ListView mListView;
@@ -82,15 +82,15 @@ public class NewPlaylistActivity extends AppCompatActivity {
                     if (editTextName.getText().toString().isEmpty()) {
                         Toast.makeText(context, context.getString(R.string.empty_input_reminder),
                                 Toast.LENGTH_SHORT).show();
-                    } else {
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(editTextName.getWindowToken(),
-                                InputMethodManager.RESULT_UNCHANGED_SHOWN);
+                    }
+                    else {
                         String songSearches = editTextName.getText().toString();
                         presentSongMatches(songSearches);
                         handled = true;
                     }
                 }
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(editTextName.getWindowToken(), 0);
 
                 return handled;
             }
@@ -101,10 +101,6 @@ public class NewPlaylistActivity extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.songSearchListView);
 
         final ArrayList<Song> songMatches = LibrarySearcher.obtainSongMatches(searchInput.split(" "), this);
-        if (songMatches.isEmpty()) {
-            Toast.makeText(this, this.getString(R.string.no_search_results_error),
-                    Toast.LENGTH_SHORT).show();
-        }
         SearchListAdapter adapter = new SearchListAdapter(this, songMatches);
         Log.d("SongMatches", songMatches.toString());
         mListView.setAdapter(adapter);

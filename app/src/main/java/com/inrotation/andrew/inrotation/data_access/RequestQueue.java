@@ -9,7 +9,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
 /**
- * Created by Andrew on 10/23/16.
+ * Represents the queue for HTTP requests.
+ * Created by Andrew Cofano on 10/23/16.
  */
 
 public class RequestQueue {

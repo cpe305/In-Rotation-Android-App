@@ -6,14 +6,24 @@ import org.json.JSONObject;
 
 
 /**
+ * Represents the factory method to create a Spotify profile when a user logs in.
  * Created by andrewcofano on 11/8/16.
  */
 
 public class SpotifyProfileBuilder {
 
+    /**
+     * Constructor for the SpotifyProfileBuilder
+     */
     public SpotifyProfileBuilder() {
     }
 
+    /**
+     *
+     * @param response The response from a request to the Spotify Web API endpoint for the current user's data
+     * @return The HostUser object representing the current application user
+     * @throws MyJSONException
+     */
     public HostUser buildSpotifyProfile(JSONObject response) throws MyJSONException {
 
         SpotifyAccess spotifyAccessInstance = SpotifyAccess.getInstance();

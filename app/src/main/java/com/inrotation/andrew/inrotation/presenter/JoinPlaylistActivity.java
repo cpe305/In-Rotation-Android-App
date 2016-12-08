@@ -23,6 +23,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.inrotation.andrew.inrotation.R;
 import com.inrotation.andrew.inrotation.model.SpotifyAccess;
 
+/**
+ * Represents the activity that handles joining a currently hosted playlist.
+ * Created by Andrew Cofano
+ */
 public class JoinPlaylistActivity extends AppCompatActivity {
 
     private FirebaseDatabase database;

@@ -15,9 +15,9 @@ import static android.R.drawable.ic_media_pause;
 import static android.R.drawable.ic_media_play;
 
 /**
- * Created by Andrew on 11/22/16.
+ * Represents the manager of a playlist, handling song additions, changes, and music playback from the playlist
+ * Created by Andrew Cofano on 11/22/16.
  */
-
 public class PlaylistManager {
 
     private final Player.OperationCallback mOperationCallback = new Player.OperationCallback() {
@@ -37,7 +37,7 @@ public class PlaylistManager {
 
     }
 
-    public void onPlayButtonClicked(ImageButton button) {
+    protected void onPlayButtonClicked(ImageButton button) {
         SpotifyAccess access = SpotifyAccess.getInstance();
         Player player = access.getSpotifyPlayer();
         PlaybackState playbackState = player.getPlaybackState();
@@ -55,7 +55,7 @@ public class PlaylistManager {
     }
 
 
-    public void playPreviousSong() {
+    protected void playPreviousSong() {
         SpotifyAccess access = SpotifyAccess.getInstance();
         Player player = access.getSpotifyPlayer();
         ArrayList<Song> list = (ArrayList<Song>)(access.getSongList());
@@ -73,7 +73,7 @@ public class PlaylistManager {
 
     }
 
-    public void playNextSong() {
+    protected void playNextSong() {
         SpotifyAccess access = SpotifyAccess.getInstance();
         Player player = access.getSpotifyPlayer();
 

@@ -16,7 +16,8 @@ import com.inrotation.andrew.inrotation.R;
 import java.util.ArrayList;
 
 /**
- * Created by andrewcofano on 11/1/16.
+ * Represents the adapter to populate a ListView in the UI with individual rows (Songs).
+ * Created by Andrew Cofano on 11/1/16.
  */
 
 public class SearchListAdapter extends BaseAdapter {

@@ -24,6 +24,10 @@ import com.spotify.sdk.android.player.Player;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * Represents the activity that handles the currently hosted playlist.
+ * Created by Andrew Cofano
+ */
 public class ActivePlaylistActivity extends AppCompatActivity {
 
     protected ArrayList<Song> songList;

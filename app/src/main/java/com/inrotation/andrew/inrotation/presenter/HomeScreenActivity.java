@@ -52,6 +52,11 @@ import com.spotify.sdk.android.player.PlayerEvent;
 import com.spotify.sdk.android.player.Spotify;
 import com.spotify.sdk.android.player.SpotifyPlayer;
 
+
+/**
+ * Represents the activity that takes care of the HostUser's information and application homescreen.
+ * Created by Andrew Cofano
+ */
 public class HomeScreenActivity extends AppCompatActivity implements
         SpotifyPlayer.NotificationCallback, ConnectionStateCallback {
 
@@ -162,15 +167,14 @@ public class HomeScreenActivity extends AppCompatActivity implements
         }
     }
 
-
     @Override
-    public void onStart() {
+    protected void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
-    public void onStop() {
+    protected void onStop() {
         super.onStop();
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
@@ -178,7 +182,7 @@ public class HomeScreenActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onResume() {
+    protected void onResume() {
         super.onStart();
         ViewRefresher.refreshPlayerBar(this, this);
 
@@ -192,6 +196,10 @@ public class HomeScreenActivity extends AppCompatActivity implements
     }
 
 
+    /**
+     *
+     * @param playerEvent represents the state that the Spotify Player has changed to
+     */
     @Override
     public void onPlaybackEvent(PlayerEvent playerEvent) {
         Log.d("HomeScreenActivity", "Playback event received: " + playerEvent.name());
@@ -202,6 +210,10 @@ public class HomeScreenActivity extends AppCompatActivity implements
 
     }
 
+    /**
+     *
+     * @param error represents the error the Spotify Player has delivered
+     */
     @Override
     public void onPlaybackError(Error error) {
         Log.d("HomeScreenActivity:", "Playback error received: " + error.name());
@@ -212,6 +224,9 @@ public class HomeScreenActivity extends AppCompatActivity implements
         }
     }
 
+    /**
+     * This method runs when the Spotify authentication has finished and creates the current HostUser object
+     */
     @Override
     public void onLoggedIn() {
 
@@ -250,6 +265,7 @@ public class HomeScreenActivity extends AppCompatActivity implements
                                         .setTitle("Could not load Spotify profile")
                                         .setMessage("Try logging back in again")
                                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                            @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 dialog.cancel();
                                             }
@@ -262,14 +278,12 @@ public class HomeScreenActivity extends AppCompatActivity implements
                         }
                         catch (Exception e) {
                             e.printStackTrace();
-                           // throw new JSONObjectException(e);
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                //mSongNameView.setText("That didn't work!" + error.toString());
                 Log.d("Volley", error.toString());
             }
         }
@@ -287,15 +301,11 @@ public class HomeScreenActivity extends AppCompatActivity implements
 
     }
 
-    public void processFirebaseLogin(final HostUser createdUser) {
+    private void processFirebaseLogin(final HostUser createdUser) {
 
         SpotifyAccess accessInstance = SpotifyAccess.getInstance();
         String email = accessInstance.getSpotifyUser().getEmail();
         String password = accessInstance.getSpotifyUser().getDbPassword();
-
-       // mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        //if (mDatabase.endAt(email) == null) {
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -313,7 +323,7 @@ public class HomeScreenActivity extends AppCompatActivity implements
                         }
                     }
                 });
-        //}
+
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -354,7 +364,7 @@ public class HomeScreenActivity extends AppCompatActivity implements
     }
 
 
-    public void loadProfilePic(String imageURL) {
+    private void loadProfilePic(String imageURL) {
         //final ImageView userProfileView = (ImageView) findViewById(R.id.userProfilePicView);
         NetworkImageView mNetworkImageView;
         ImageLoader mImageLoader;
@@ -369,27 +379,39 @@ public class HomeScreenActivity extends AppCompatActivity implements
 
     }
 
-    public void loadUserNameView(String userName) {
+    private void loadUserNameView(String userName) {
         final TextView userNameView = (TextView) findViewById(R.id.userProfileNameView);
         userNameView.setText(userName);
 
     }
 
+    /**
+     * Method to run when the Spotify account logs out of the In Rotation Application
+     */
     @Override
     public void onLoggedOut() {
         Log.d("HomeScreenActivity", "HostUser logged out");
     }
 
+    /**
+     * Method to run when something went wrong during the Spotify account login process
+     */
     @Override
     public void onLoginFailed(int i) {
         Log.d("HomeScreenActivity", "Login failed");
     }
 
+    /**
+     * Method to run when there is a temporary error during the Spotify account login process
+     */
     @Override
     public void onTemporaryError() {
         Log.d("HomeScreenActivity", "Temporary error occurred");
     }
 
+    /**
+     * Method to run when the Spotify account login process finds a connection with Spotify database
+     */
     @Override
     public void onConnectionMessage(String message) {
         Log.d("HomeScreenActivity", "Received connection message: " + message);

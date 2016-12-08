@@ -21,6 +21,10 @@ import com.inrotation.andrew.inrotation.model.Song;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the activity that handles adding a new song to the current playlist.
+ * Created by Andrew Cofano
+ */
 public class AddSongActivity extends AppCompatActivity {
 
     private ListView mListView;
@@ -56,7 +60,7 @@ public class AddSongActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onStop() {
+    protected void onStop() {
         super.onStop();
     }
 
@@ -73,14 +77,13 @@ public class AddSongActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(editTextName.getWindowToken(),
-                                InputMethodManager.RESULT_UNCHANGED_SHOWN);
                         String songSearches = editTextName.getText().toString();
                         presentSongMatches(songSearches);
                         handled = true;
                     }
                 }
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(editTextName.getWindowToken(), 0);
 
                 return handled;
             }
@@ -91,10 +94,6 @@ public class AddSongActivity extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.songSearchListView);
 
         final ArrayList<Song> songMatches = LibrarySearcher.obtainSongMatches(searchInput.split(" "), this);
-        if (songMatches.isEmpty()) {
-            Toast.makeText(this, this.getString(R.string.no_search_results_error),
-                    Toast.LENGTH_SHORT).show();
-        }
         SearchListAdapter adapter = new SearchListAdapter(this, songMatches);
         Log.d("SongMatches", songMatches.toString());
         mListView.setAdapter(adapter);

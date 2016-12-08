@@ -3,6 +3,10 @@ package com.inrotation.andrew.inrotation.model;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+/**
+ * Represents a playlist being hosted by a HostUser.
+ * Created by Andrew Cofano
+ */
 public class Playlist {
 
     public String playlistName;

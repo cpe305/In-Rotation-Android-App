@@ -11,7 +11,8 @@ import com.inrotation.andrew.inrotation.model.Song;
 import com.inrotation.andrew.inrotation.model.SpotifyAccess;
 
 /**
- * Created by Andrew on 11/30/16.
+ * Represents the designated handler of the Music Play Bar view and its state.
+ * Created by Andrew Cofano on 11/30/16.
  */
 
 public class ViewRefresher {

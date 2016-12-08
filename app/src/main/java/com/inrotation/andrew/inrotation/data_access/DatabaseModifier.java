@@ -15,7 +15,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Andrew on 11/20/16.
+ * Represents the access to the Firebase database, for writing data.
+ * Created by Andrew Cofano on 11/20/16.
  */
 public class DatabaseModifier {
 
@@ -31,12 +32,10 @@ public class DatabaseModifier {
         ref.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.getValue() == null) {
-                    if (snapshot.getValue() != createdUser.getEmail()) {
-                        DatabaseReference userRef = database.getReference("server/saving-data/users");
-                        DatabaseReference placeUserRef = userRef.push();
-                        placeUserRef.setValue(createdUser);
-                    }
+                if (snapshot.getValue() == null && snapshot.getValue() != createdUser.getEmail()) {
+                    DatabaseReference userRef = database.getReference("server/saving-data/users");
+                    DatabaseReference placeUserRef = userRef.push();
+                    placeUserRef.setValue(createdUser);
                 }
             }
             @Override
