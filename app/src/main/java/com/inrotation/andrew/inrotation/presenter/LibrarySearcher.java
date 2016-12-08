@@ -7,6 +7,7 @@ import android.util.Log;
 import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.inrotation.andrew.inrotation.R;
 import com.inrotation.andrew.inrotation.model.MyJSONException;
 import com.inrotation.andrew.inrotation.model.Song;
 
@@ -16,6 +17,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.concurrent.RunnableFuture;
 
 /**
  * Created by andrewcofano on 11/18/16.
@@ -48,11 +50,14 @@ public class LibrarySearcher {
                                 returnArray.add(trackObject);
 
                             }
-                        } catch (MyJSONException e) {
-                            Log.d("Error", e.toString());
-                        } catch (JSONException e) {
-                            Log.d("Error", e.toString());
+                        } catch (RuntimeException e) {
+                            returnArray.clear();
+                            throw e;
+                            //Log.d("Error", e.toString());
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
                         }
+
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -100,7 +105,7 @@ public class LibrarySearcher {
     }
 
     protected static Song createSongOf(JSONObject jsonTrack) throws MyJSONException {
-        Song newSong = null;
+        Song newSong;
 
         try {
             String songName = jsonTrack.getString("name");
@@ -117,9 +122,11 @@ public class LibrarySearcher {
             newSong = new Song(songName, artist, albumName, duration, albumCovers, songURI, explicit);
             return newSong;
         }
-        catch (JSONException e) {
-            Log.d("Error", e.toString());
-            throw new MyJSONException("Something went wrong");
+        catch (RuntimeException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -132,9 +139,12 @@ public class LibrarySearcher {
             try {
                 albumCoverURLs.add(albumCovers.getJSONObject(i).getString("url"));
             }
-            catch (JSONException e) {
-                e.printStackTrace();
-                throw new RuntimeException("context");
+            catch (RuntimeException e) {
+                //e.printStackTrace();
+                throw e;
+            }
+            catch (Exception e) {
+                throw new RuntimeException(e);
             }
         }
 

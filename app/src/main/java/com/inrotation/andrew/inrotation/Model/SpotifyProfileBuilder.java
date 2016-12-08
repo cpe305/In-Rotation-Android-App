@@ -11,16 +11,13 @@ import org.json.JSONObject;
 
 public class SpotifyProfileBuilder {
 
-    private static final String PROFILE_ACCESS_URL = "https://api.spotify.com/v1/me";
-
     public SpotifyProfileBuilder() {
     }
 
     public HostUser buildSpotifyProfile(JSONObject response) throws MyJSONException {
 
         SpotifyAccess spotifyAccessInstance = SpotifyAccess.getInstance();
-
-        HostUser newUser = null;
+        HostUser newUser;
         try {
 
             JSONArray profilePic = response.getJSONArray("images");
@@ -45,8 +42,8 @@ public class SpotifyProfileBuilder {
 
         }
         catch (JSONException e) {
-            throw new MyJSONException("Something went wrong");
 
+            throw new MyJSONException(e);
         }
 
         return newUser;

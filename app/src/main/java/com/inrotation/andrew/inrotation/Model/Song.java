@@ -1,10 +1,8 @@
 package com.inrotation.andrew.inrotation.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-public class Song implements Serializable {
+public class Song {
 
     public String songName;
     public  String artists;

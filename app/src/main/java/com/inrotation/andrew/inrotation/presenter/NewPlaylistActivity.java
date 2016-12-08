@@ -17,9 +17,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
 import com.inrotation.andrew.inrotation.data_access.DatabaseModifier;
 import com.inrotation.andrew.inrotation.model.NewPlaylistCreator;
 import com.inrotation.andrew.inrotation.model.Playlist;
@@ -48,7 +45,7 @@ public class NewPlaylistActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        getSupportActionBar().setTitle("New Playlist");
+        getSupportActionBar().setTitle(R.string.new_playlist_title);
 
         playlistCreator = new NewPlaylistCreator();
         playlistCreator.setPlaylistName(getSupportActionBar().getTitle().toString());
@@ -83,7 +80,7 @@ public class NewPlaylistActivity extends AppCompatActivity {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     if (editTextName.getText().toString().isEmpty()) {
-                        Toast.makeText(context, "Please enter something.",
+                        Toast.makeText(context, context.getString(R.string.empty_input_reminder),
                                 Toast.LENGTH_SHORT).show();
                     } else {
                         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -105,7 +102,7 @@ public class NewPlaylistActivity extends AppCompatActivity {
 
         final ArrayList<Song> songMatches = LibrarySearcher.obtainSongMatches(searchInput.split(" "), this);
         if (songMatches.isEmpty()) {
-            Toast.makeText(this, "No search results found",
+            Toast.makeText(this, this.getString(R.string.no_search_results),
                     Toast.LENGTH_SHORT).show();
         }
         SearchListAdapter adapter = new SearchListAdapter(this, songMatches);

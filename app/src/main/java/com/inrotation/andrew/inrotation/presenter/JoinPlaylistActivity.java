@@ -35,7 +35,7 @@ public class JoinPlaylistActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        getSupportActionBar().setTitle("Join A Playlist");
+        getSupportActionBar().setTitle(R.string.join_playlist_title);
         database = FirebaseDatabase.getInstance();
 
         final EditText editTextName = (EditText) findViewById(R.id.searchPlaylistCode);
@@ -60,7 +60,7 @@ public class JoinPlaylistActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SpotifyAccess access = SpotifyAccess.getInstance();
                 if (editTextName.getText().toString().equals(access.getSpotifyUser().getPlaylistToken())) {
-                    Toast.makeText(context, "Cannot join your own playlist.",
+                    Toast.makeText(context, context.getString(R.string.joining_own_playlist_error),
                             Toast.LENGTH_LONG).show();
                 }
                 else {
@@ -82,7 +82,7 @@ public class JoinPlaylistActivity extends AppCompatActivity {
                     startActivity(joinPlaylistIntent);
                 }
                 else {
-                    Toast.makeText(context, "Playlist does not exist. Please try again.",
+                    Toast.makeText(context, context.getString(R.string.playlist_not_exist_error),
                             Toast.LENGTH_LONG).show();
                 }
             }

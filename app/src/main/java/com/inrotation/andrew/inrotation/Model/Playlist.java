@@ -14,7 +14,7 @@ public class Playlist {
         //Empty Constructor becauase of Firebase requirement
     }
 
-    public Playlist(String playlistName, String owner, Song firstSong) {
+    public Playlist(String playlistName, String owner) {
         this.playlistName = playlistName;
         this.owner = owner;
         this.currentSongIndex = 0;

@@ -40,7 +40,7 @@ public class AddSongActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        getSupportActionBar().setTitle("Add a Song");
+        getSupportActionBar().setTitle(R.string.add_song_title);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class AddSongActivity extends AppCompatActivity {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     if (editTextName.getText().toString().isEmpty()) {
-                        Toast.makeText(context, "Please enter something.",
+                        Toast.makeText(context,context.getString(R.string.empty_input_reminder),
                                 Toast.LENGTH_SHORT).show();
                     }
                     else {
@@ -92,7 +92,7 @@ public class AddSongActivity extends AppCompatActivity {
 
         final ArrayList<Song> songMatches = LibrarySearcher.obtainSongMatches(searchInput.split(" "), this);
         if (songMatches.isEmpty()) {
-            Toast.makeText(this, "No search results found",
+            Toast.makeText(this, this.getString(R.string.no_search_results_error),
                     Toast.LENGTH_SHORT).show();
         }
         SearchListAdapter adapter = new SearchListAdapter(this, songMatches);

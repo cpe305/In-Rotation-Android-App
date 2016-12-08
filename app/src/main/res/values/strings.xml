@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">In Rotation</string>
+    <string name="new_playlist_title">New Playlist</string>
+    <string name="my_home_title">My Home</string>
+    <string name="add_song_title">Add A Song</string>
+    <string name="join_playlist_title">Join A Playlist</string>
+    <string name="empty_input_reminder">Please input something</string>
+    <string name="no_search_results_error">No search results found</string>
+    <string name="joining_own_playlist_error">Cannot join your own playlist</string>
+    <string name="playlist_not_exist_error">Playlist does not exist. Please try again.</string>
 </resources>
